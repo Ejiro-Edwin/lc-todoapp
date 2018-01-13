@@ -1,0 +1,19 @@
+@import 'react-md/src/scss/react-md';
+
+// Variable overrides
+$md-primary-color: $md-purple-300;
+$md-secondary-color: $md-purple-a-400;
+
+.md-toolbar--themed .md-title--toolbar {
+    color: rgba(0, 0, 0, 0.65);
+}
+.md-list-tile{
+    padding-left: 25px;
+    padding-right: 25px;
+    i{
+        font-size: 22px;
+    }
+    .md-tile-addon--icon {
+        width: 20px;
+    }
+}
