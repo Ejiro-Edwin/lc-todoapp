@@ -1,14 +1,13 @@
 import { tasksConstants } from '../constants/tasks';
 import initialState from './initialState';
-// let user = JSON.parse(localStorage.getItem('user'));
 
 
 export default function tasks(state = initialState.tasks, action) {
   switch (action.type) {
     case tasksConstants.FETCH_TODOTASKS_REQUEST:
       return {
-          isFetching: true,
-          data: []
+        ...state,
+        isFetching: true,
       }
     case tasksConstants.FETCH_TODOTASKS_SUCCESS:
       return {
@@ -17,24 +16,30 @@ export default function tasks(state = initialState.tasks, action) {
       }
     case tasksConstants.FETCH_TODOTASKS_FAILURE:
       return {
+        ...state,
         isFetching: false,
-        data: []
       }
     case tasksConstants.UPDATE_TASK_REQUEST:
-      return{
-        isFetching: true,
+      return {
+        ...state,
+        isFetching: true
       }
 
     case tasksConstants.UPDATE_TASK_SUCCESS:
-      return{
-        isFetching: false,
-        data: action.payload.data
+      return {
+        ...state,
+        data: state.data.map( todo => { 
+          if(todo.id === action.payload.id){
+            return action.payload
+          } 
+          return todo
+        })
       }
 
     case tasksConstants.UPDATE_TASK_FAILURE:
       return{
+        ...state,
         isFetching: false,
-        data: []
       }
     default:
       return state

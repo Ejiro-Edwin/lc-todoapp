@@ -8,7 +8,7 @@ export const login = (email, password) => ({
           authConstants.LOGIN_SUCCESS, 
           {
             type: authConstants.LOGIN_FAILURE,
-            payload: (action, state, res) => ({error: "Login ou Senha incorretos, tente novamente"})
+            meta: (action, state, res) => ({errorMessage: "Login ou Senha incorretos, tente novamente"})
           }
         ],
       endpoint: 'http://localhost:8000/api/v1/auth/obtain_token/',
@@ -19,6 +19,6 @@ export const login = (email, password) => ({
     }
   });
 
-  export const logout = (errorMsg) => ({
+  export const logout = () => ({
     type: authConstants.LOGOUT,
   });

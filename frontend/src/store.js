@@ -1,11 +1,11 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import storage from 'redux-persist/es/storage';
+import { applyMiddleware, createStore } from 'redux'
 import { apiMiddleware } from 'redux-api-middleware';
-import { auth } from './reducers/auth';
-import { notifications } from './reducers/notifications';
-import { persistReducer, persistStore } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import {apiAuthHeader, authLocalManager} from './utils/apiAuthInjector'; 
-import rootReducer from './reducers';
+import { persistReducer, persistStore } from 'redux-persist'
+import { routerMiddleware } from 'react-router-redux'
+
+import { apiAuthHeader, authLocalManager } from './utils/apiAuthInjector';
+import rootReducer from './reducers'
 
 export default (history) => {
 
@@ -16,18 +16,19 @@ export default (history) => {
       whitelist: ['auth'],
     },
     rootReducer
-  );
-
-  // custom middleware.
+  )
 
   const store = createStore(
-    reducer,
+    reducer, {},
     applyMiddleware(
       apiAuthHeader,
       apiMiddleware,
-      authLocalManager)
+      authLocalManager,
+      routerMiddleware(history)
+    )
   )
 
-  persistStore(store);
-  return store;
+  persistStore(store)
+
+  return store
 }

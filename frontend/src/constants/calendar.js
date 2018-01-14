@@ -2,8 +2,8 @@ export const calendarStrings = {
     lastDay : '[Ontem]',
     sameDay : '[Hoje]',
     nextDay : '[Amanhã]',
-    nextWeek: 'dddd',
-    sameYear:  'D MMM', 
+    lastWeek : 'D MMM',
+    nextWeek : 'dddd',
     sameElse : 'D MMM, YYYY'
 };
 

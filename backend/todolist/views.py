@@ -25,5 +25,3 @@ class TasksViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
 
 
-    
-

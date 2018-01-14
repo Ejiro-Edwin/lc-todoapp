@@ -5,6 +5,7 @@
   "proxy": "http://localhost:8000/api/",
   "dependencies": {
     "jwt-decode": "^2.2.0",
+    "localforage": "^1.5.5",
     "moment": "^2.20.1",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",

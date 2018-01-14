@@ -36,7 +36,7 @@ class Account(AbstractBaseUser):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = AccountManager()
-    image = models.ImageField(upload_to="users/pictures/", default='users/default.jpg' ,blank=True,null=True)
+    image = models.ImageField(upload_to="media/users/pictures/", default='media/users/default.jpg' ,blank=True,null=True)
     USERNAME_FIELD = 'email'
 
     def __unicode__(self):

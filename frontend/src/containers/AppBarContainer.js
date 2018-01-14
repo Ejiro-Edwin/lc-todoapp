@@ -6,16 +6,18 @@ import NavLink from '../components/NavLink';
 import imgLogo from '../images/todo-app-logo.png';
 
 
-
 class AppBarContainer extends Component {
     constructor (props) {
         super(props)   
     }
-componentDidMount() {
-    if(this.props.todolists.length === 0){
-        this.props.fetchTodoLists()
-    }
+
+componentWillReceiveProps(nextProps){
+  if((this.props.isAuthenticated !== nextProps.isAuthenticated)
+        && nextProps.isAuthenticated){
+            this.props.fetchTodoLists()
+  }
 }
+
 
 renderTodoListItems(){
     if(this.props.todolists.length > 0){
@@ -31,7 +33,7 @@ renderTodoListItems(){
 }
 
 render(){
-    const { todolists, location, isAuthenticated } = this.props;
+    const { todolists, location, isAuthenticated, children } = this.props;
     
     const arrayNavItems = [
         {
@@ -46,9 +48,8 @@ render(){
           }, 
           ...this.renderTodoListItems()
     ];
-    const props = this.props;
     return (
-        isAuthenticated && localStorage.getItem('lctodo_token')? 
+        isAuthenticated? 
         <NavigationDrawer
             toolbarTitle={
             <div className="logo">
@@ -62,13 +63,13 @@ render(){
             desktopDrawerType={NavigationDrawer.DrawerTypes.CLIPPED}
             drawerZDepth={1}
             toolbarThemeType="themed"
-            navItems={arrayNavItems.map((props, i) => {
-                return <NavLink {...props} key={i} location={location} />})
+            navItems={arrayNavItems.map((item, i) => {
+                return <NavLink {...item} key={i} location={location} />})
             }
         >
-        {props.children}
+        {children}
         </NavigationDrawer>
-        : props.children
+        : children
     )
     }
 }

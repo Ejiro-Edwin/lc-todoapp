@@ -17,7 +17,7 @@ export default function auth(state = initialState.auth, action) {
         token: action.payload.access
       };
     case authConstants.LOGIN_FAILURE:
-    localStorage.removeItem('lctodo_token');
+      localStorage.removeItem('lctodo_token');
       return {
         loggingIn: false,
         isAuthenticated: false,
