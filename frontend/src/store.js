@@ -4,7 +4,7 @@ import { auth } from './reducers/auth';
 import { notifications } from './reducers/notifications';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import apiAuthInjector from './utils/apiAuthInjector'; 
+import {apiAuthHeader, authLocalManager} from './utils/apiAuthInjector'; 
 import rootReducer from './reducers';
 
 export default (history) => {
@@ -22,7 +22,10 @@ export default (history) => {
 
   const store = createStore(
     reducer,
-    applyMiddleware(apiAuthInjector, apiMiddleware)
+    applyMiddleware(
+      apiAuthHeader,
+      apiMiddleware,
+      authLocalManager)
   )
 
   persistStore(store);

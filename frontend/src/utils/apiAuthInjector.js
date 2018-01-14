@@ -1,29 +1,35 @@
-import {  RSAA, FSA } from 'redux-api-middleware';
-import { logout } from '../actions/auth';
+import { CALL_API } from 'redux-api-middleware'
+import { authConstants } from '../constants/auth'
 
-export default store => next => action => {
-  const callApi = action[RSAA]
-  // Check if this action is a redux-api-middleware action.
-  if (callApi) {
-    // Inject the Authorization header from localStorage.
-    callApi.headers = Object.assign({}, callApi.headers, {
-      "Authorization": "Bearer " + localStorage.getItem('lctodo_token') || '',
-      "Accept-Language": 'pt-br'
-    });
-    const nextAction = {
-      [RSAA]: callApi
-    };
-  
-    return next(nextAction).then((data) => {
-      if (data.payload && data.payload.name === 'ApiError' && data.payload.status === 401) {
-        return store.dispatch(logout())
-      }
-      return data;
-    });
-  }
 
-  
-  // Pass the FSA to the next action.
+export const authLocalManager = store => next => action => {
+  if ( action.type === authConstants.LOGOUT ||
+      (action.payload &&
+        (action.payload.status === 401 || action.payload.status === 403)
+      )
+  ) {
+    console.log('auth')
+    localStorage.removeItem('lctodo_token')
+    action.type = authConstants.LOGOUT
+  } 
   return next(action)
+  
 
+  
+}
+
+export const apiAuthHeader = store => next => action => {
+  const callApi = action[CALL_API]
+  if (callApi) {
+    console.log('header')
+  	const token = localStorage.getItem('lctodo_token') || ''
+    callApi.headers = Object.assign({}, callApi.headers)
+    callApi.headers['Authorization'] = `Bearer ${token}`
+  }
+  return next(action)
+}
+
+export default {
+	apiAuthHeader,
+	authLocalManager
 }

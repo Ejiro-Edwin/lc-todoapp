@@ -17,11 +17,14 @@ export default function auth(state = initialState.auth, action) {
         token: action.payload.access
       };
     case authConstants.LOGIN_FAILURE:
+    localStorage.removeItem('lctodo_token');
       return {
         loggingIn: false,
         isAuthenticated: false,
+        token: ''
       };
     case authConstants.LOGOUT:
+      localStorage.removeItem('lctodo_token');
       return {
         loggingIn: false,
         isAuthenticated: false,

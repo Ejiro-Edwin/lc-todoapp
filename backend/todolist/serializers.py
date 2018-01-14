@@ -12,10 +12,10 @@ class TodoListSerializer(serializers.HyperlinkedModelSerializer):
         read_only_fields = ('created_at',)
 
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
-    link = serializers.HyperlinkedIdentityField(view_name='todolist-detail')
-
+    link = serializers.HyperlinkedIdentityField(view_name='task-detail')
+    created_at = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
     class Meta:
         model = Task
-        fields = ('link', 'status','created_at','description','assign_to',
+        fields = ('id','link', 'status','created_at','description','assign_to',
                     'todolist','deadline','completed_date')
         read_only_fields = ('created_at',)

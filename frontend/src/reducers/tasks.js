@@ -20,6 +20,22 @@ export default function tasks(state = initialState.tasks, action) {
         isFetching: false,
         data: []
       }
+    case tasksConstants.UPDATE_TASK_REQUEST:
+      return{
+        isFetching: true,
+      }
+
+    case tasksConstants.UPDATE_TASK_SUCCESS:
+      return{
+        isFetching: false,
+        data: action.payload.data
+      }
+
+    case tasksConstants.UPDATE_TASK_FAILURE:
+      return{
+        isFetching: false,
+        data: []
+      }
     default:
       return state
   }

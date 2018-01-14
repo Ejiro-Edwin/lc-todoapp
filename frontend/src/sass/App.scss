@@ -1,1 +1,53 @@
 @import 'globals';
+
+.md-toolbar--themed .md-title--toolbar {
+    color: rgba(0, 0, 0, 0.65);
+}
+.md-list-tile{
+    padding-left: 25px;
+    padding-right: 25px;
+    i{
+        font-size: 22px;
+    }
+    .md-tile-addon--icon {
+        width: 20px;
+    }
+}
+nav{
+    .md-toolbar{
+        height: 0;
+    }
+}
+.md-table-column:first-child {
+    padding-left: 7px;
+}
+.md-edit-dialog__blocked-field.md-edit-dialog__blocked-field{
+    width: 100%
+}
+
+.md-picker-container{
+    .md-text-field-container{
+        display: none;
+    }
+}
+
+.checkbox-column{
+    width: 30px;
+    padding-right: 10px;
+}
+.datepicker-column{
+    cursor: pointer;
+    width: 130px;
+    padding-right: 10px;
+    i{
+        margin-right: 5px;
+        line-height: 24px;
+        vertical-align: top;
+    }
+    time{
+        vertical-align: text-bottom;
+        line-height: 27px;
+        display: inline-block;
+    }
+}
+
