@@ -14,6 +14,7 @@ export default function todolists(state = initialState.todolists, action) {
         data: action.payload
       };
     case todoListConstants.FETCH_TODOLISTS_FAILURE:
+      console.log(action)
       return {
         isFetching: false,
         data: []

@@ -40,11 +40,7 @@ render(){
             to: '/',
             icon: 'dashboard',
           },{
-            label: 'Dashboard',
-            to: '/page-1',
-            icon: 'dashboard',
-          },{
-            label: 'Todos',
+            label: 'To-Dos',
             subheader: true,
             icon: 'assignments',
           }, 

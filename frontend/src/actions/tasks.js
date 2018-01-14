@@ -4,14 +4,30 @@ import { tasksConstants } from '../constants/tasks';
 export const fetchTodoTasks = (todoListId) => ({
     [RSAA]: {
       types: [
-          todoListConstants.FETCH_TODOTASKS_REQUEST, 
-          todoListConstants.FETCH_TODOTASKS_SUCCESS, 
-          todoListConstants.FETCH_TODOTASKS_FAILURE, 
+          tasksConstants.FETCH_TODOTASKS_REQUEST, 
+          tasksConstants.FETCH_TODOTASKS_SUCCESS, 
+          tasksConstants.FETCH_TODOTASKS_FAILURE, 
         ],
-      endpoint: `http://localhost:8000/api/v1/todolists/${todoListId}`,
+      endpoint: `http://localhost:8000/api/v1/todolists/${todoListId}/tasks/`,
       method: 'GET',
       headers: { 
         'Content-Type': 'application/json' 
      }
+    }
+  });
+
+export const updateTask = (parameters) => ({
+    [RSAA]: {
+      types: [
+          tasksConstants.UPDATE_TASK_REQUEST, 
+          tasksConstants.UPDATE_TASK_SUCCESS, 
+          tasksConstants.UPDATE_TASK_FAILURE, 
+        ],
+      endpoint: `http://localhost:8000/api/v1/tasks/${parameters.id}/`,
+      method: 'PATCH',
+      headers: { 
+        'Content-Type': 'application/json' 
+     },
+     body: JSON.stringify(parameters)
     }
   });
