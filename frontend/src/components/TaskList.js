@@ -3,7 +3,8 @@ import {
     Subheader,
     DatePicker,
     DataTable,
-    TableBody
+    TableBody,
+    Button
   } from 'react-md';
 import TaskListItem from './TaskListItem';
 
@@ -14,6 +15,7 @@ const TaskList = ({ ...props }) => (
         <DatePicker
             id="date-picker-controlled"
             label="Select date"
+            className="hidden-datepicker"
             value={props.datePickerValue}
             visible={props.datePickerVisible}
             autoOk
@@ -23,8 +25,19 @@ const TaskList = ({ ...props }) => (
             onVisibilityChange={props.datePickerHandleVisibility}
         />
         <div className="md-cell md-cell--12">
-          <p className="md-subheader md-text--secondary">Work Stuff</p>
-          <DataTable plain>
+            <div className="md-grid">
+                <h5 className="md-text--secondary md-cell md-cell--6">{props.todoName}</h5>
+                <div className="md-cell--right">
+                    <Button 
+                        raised 
+                        primary 
+                        iconChildren="add"
+                        onClick={() => props.taskDialogHandleVisibility(true)}>
+                            Nova Task
+                    </Button>
+                </div>
+            </div>
+            <DataTable plain>
               <TableBody>
                 {props.tasks.map(task =>
                     <TaskListItem 

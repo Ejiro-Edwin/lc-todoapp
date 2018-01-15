@@ -21,11 +21,13 @@ nav{
 .md-edit-dialog__blocked-field.md-edit-dialog__blocked-field{
     width: 100%
 }
-
-.md-picker-container{
+.hidden-datepicker{
     .md-text-field-container{
         display: none;
     }
+}
+#add-task-dialog{
+    top: 50% !important;
 }
 .md-table-body{
     .md-table-column:first-child {
@@ -57,8 +59,8 @@ nav{
         width: 60px;
         .task-avatar{
             display: inline-block;
-            width: 35px;
-            height: 35px;
+            width: 30px;
+            height: 30px;
             background-position: center center;
             background-size: cover;
             border-radius: 50%;
@@ -84,6 +86,7 @@ nav{
         .avatar-column{
             .task-avatar{
                 cursor: default;
+                filter: grayscale(1);
             }
         }
     }

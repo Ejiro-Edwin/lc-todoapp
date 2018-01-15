@@ -1,6 +1,5 @@
 import { authConstants } from '../constants/auth';
 import initialState from './initialState';
-// let user = JSON.parse(localStorage.getItem('user'));
 
 
 export default function auth(state = initialState.auth, action) {

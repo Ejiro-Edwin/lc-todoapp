@@ -24,7 +24,6 @@ export default function tasks(state = initialState.tasks, action) {
         ...state,
         isFetching: true
       }
-
     case tasksConstants.UPDATE_TASK_SUCCESS:
       return {
         ...state,
@@ -35,12 +34,26 @@ export default function tasks(state = initialState.tasks, action) {
           return todo
         })
       }
-
     case tasksConstants.UPDATE_TASK_FAILURE:
       return{
         ...state,
         isFetching: false,
       }
+    case tasksConstants.CREATE_TASK_REQUEST:
+      return{
+        ...state,
+        isFetching: true,
+      }  
+    case tasksConstants.CREATE_TASK_SUCCESS:
+      return{
+        ...state,
+        data: state.data.concat(action.payload)
+      }  
+    case tasksConstants.CREATE_TASK_FAILURE:
+      return{
+        ...state,
+        isFetching: false
+      }  
     default:
       return state
   }

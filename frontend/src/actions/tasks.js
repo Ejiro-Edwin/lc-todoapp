@@ -34,3 +34,22 @@ export const updateTask = (parameters) => ({
      body: JSON.stringify(parameters)
     }
   });
+
+  export const createTask = (parameters) => ({
+    [RSAA]: {
+      types: [
+          tasksConstants.CREATE_TASK_REQUEST, 
+          {
+            type: tasksConstants.CREATE_TASK_SUCCESS,
+            meta: (action, state, res) => ({ successMessage: "Task adicionada" })
+          },
+          tasksConstants.CREATE_TASK_FAILURE, 
+        ],
+      endpoint: `http://localhost:8000/api/v1/tasks/`,
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json' 
+     },
+     body: JSON.stringify(parameters)
+    }
+  });
