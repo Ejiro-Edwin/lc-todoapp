@@ -14,6 +14,10 @@ const initialState = {
     tasks: {
         data: [],
         isFetching: false
+    },
+    users: {
+        data: [],
+        isFetching: false
     }
 }
 export default initialState;

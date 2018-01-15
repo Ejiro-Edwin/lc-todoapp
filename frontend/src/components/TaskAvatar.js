@@ -12,7 +12,7 @@ const TaskAvatar = ({ ...props }) => {
             <div className="task-avatar" 
                 onClick={props.onClick || null}
                 style={{
-                    backgroundImage: `url(${props.image})`
+                    backgroundImage: `url(${props.user.image})`
                 }} />
             :
             <Avatar>{props.user.first_name.slice('0')}</Avatar>

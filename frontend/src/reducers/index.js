@@ -4,11 +4,15 @@ import auth from './auth.js'
 import notifications from './notifications.js';
 import todolists from './todolists';
 import tasks from './tasks';
+import users from './users';
+import {reducer as formReducer} from "redux-form";
 
 export default combineReducers({
-  auth: auth,
-  todolists: todolists,
-  tasks: tasks,
-  notifications: notifications,
-  router: routerReducer
+  auth,
+  todolists,
+  tasks,
+  notifications,
+  users,
+  router: routerReducer,
+  form: formReducer
 })
