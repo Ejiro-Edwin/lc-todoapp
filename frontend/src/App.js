@@ -24,8 +24,8 @@ class App extends Component {
                   <PrivateRoute exact path="/" location={location} component={Home} />
                   <PrivateRoute path="/todo/:id" location={location} component={Tasks} />
                   <PrivateRoute path="/page-2" location={location} component={Page2} />
-                  <NotificationsContainer />
               </Switch>
+              <NotificationsContainer />
             </AppBarContainer>
         )}
       />

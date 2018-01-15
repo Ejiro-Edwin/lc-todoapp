@@ -11,4 +11,3 @@ class UserViewSet(viewsets.ModelViewSet):
     """User API Views"""
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
-    permission_classes = (IsAuthenticated,)

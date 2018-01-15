@@ -8,7 +8,6 @@ import { Card, CardTitle } from 'react-md';
 import NotificationsContainer from './NotificationsContainer';
 import logo from "../images/todo-app-icon.png";
 import CardText from 'react-md/lib/Cards/CardText';
-
 const styles = {
   section: {
     height: '100vh',
@@ -27,10 +26,11 @@ const styles = {
   }
 }
 
-const AuthContainer = (props) => {
+const AuthContainer = ({...props}) => {
+  const { from } = props.location.state || { from: { pathname: '/' } }
   return (
-    props.isAuthenticated && localStorage.getItem('lctodo_token')? 
-      <Redirect to='/' />
+    props.isAuthenticated?
+      <Redirect to={from} />
       :
       <div className="auth-page">
         <FullWidthSection style={styles.section}>

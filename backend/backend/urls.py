@@ -1,11 +1,12 @@
 from django.urls import path, include
 from django.contrib import admin
+from django.conf import settings
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-
+from django.conf.urls.static import static
 from user_auth import views
 from todolist import views as todoViews
 
@@ -23,8 +24,9 @@ urlpatterns = [
     # Browsable API
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
+
     path('admin/', admin.site.urls),
-  
-    
-]
+] 
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 print(router.urls)

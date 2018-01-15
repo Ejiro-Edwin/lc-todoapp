@@ -20,7 +20,10 @@ export const updateTask = (parameters) => ({
     [RSAA]: {
       types: [
           tasksConstants.UPDATE_TASK_REQUEST, 
-          tasksConstants.UPDATE_TASK_SUCCESS, 
+          {
+            type: tasksConstants.UPDATE_TASK_SUCCESS,
+            meta: (action, state, res) => ({ successMessage: "Task atualizada" })
+          },
           tasksConstants.UPDATE_TASK_FAILURE, 
         ],
       endpoint: `http://localhost:8000/api/v1/tasks/${parameters.id}/`,

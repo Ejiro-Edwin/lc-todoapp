@@ -16,17 +16,17 @@ export default function notifications(state = initialState.notifications, action
       status: ""
     }
   }
-  if (!action.error || action.ignoreNotification) {
+  if (!action.meta || action.ignoreNotification) {
     return state
   }
-  if (action.payload.status === 401){
-    return {
-      status: "Sua sessão expirou. Por favor faça login novamente."
+  if (action.meta){
+    if(action.meta.errorMessage || action.meta.successMessage){
+      return {
+        status: action.meta.errorMessage || action.meta.successMessage
+      }
     }
   }
-  return {
-    status: action.payload.statusText || action.payload.error
-  }
+  return state
 }
 
 export function resetNotification() {

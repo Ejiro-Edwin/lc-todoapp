@@ -14,7 +14,8 @@ class TaskListContainer extends Component {
         this.state = {
             datePickerVisibility: false,
             datePickerValue: new Date(),
-            selectedTaskId: 0
+            selectedTaskId: 0,
+            dialogUsersVisibility: false
         }
     }
 componentDidMount = () => {
@@ -48,23 +49,29 @@ handleTaskDateChange = (newDate) => {
     });
     this.handleVisibilityChange(false);
 }
-
+handleToggleTaskStatus = (selectedTaskId, newStatus) => {
+    this.props.updateTask({
+        id: selectedTaskId,
+        status: newStatus? 'completed' : 'incompleted'
+    })
+}
 
 render(){
     const tasks  = this.props.tasks || [];
     const { datePickerVisibility, datePickerValue } = this.state;
-    const completedTasks = tasks.filter(task => task.status === "completed");
-    const uncompletedTasks = tasks.filter(task => task.status === "incompleted");
     return (
+        <div>
             <TaskList 
-                completedTasks={completedTasks}
-                uncompletedTasks={uncompletedTasks}
+                tasks={tasks}
                 datePickerVisible={datePickerVisibility}
                 datePickerValue={datePickerValue}
                 datePickerHandleVisibility={this.handleVisibilityChange}
                 onTaskDateClick={this.handleTaskDateClick} 
                 onTaskDateChange={this.handleTaskDateChange}
-                onTaskDescriptionChange={this.handleTaskDescriptionChange} />
+                onTaskDescriptionChange={this.handleTaskDescriptionChange}
+                onToggleTaskStatus={this.handleToggleTaskStatus} />
+            
+        </div>
         )
     }
 }

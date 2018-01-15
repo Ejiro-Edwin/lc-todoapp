@@ -18,9 +18,6 @@ nav{
         height: 0;
     }
 }
-.md-table-column:first-child {
-    padding-left: 7px;
-}
 .md-edit-dialog__blocked-field.md-edit-dialog__blocked-field{
     width: 100%
 }
@@ -30,24 +27,66 @@ nav{
         display: none;
     }
 }
+.md-table-body{
+    .md-table-column:first-child {
+        padding-left: 7px;
+    }
+    .checkbox-column{
+        width: 30px;
+        padding-right: 10px;
+    }
+    .datepicker-column{
+        & *{
+            transition: all linear .4s;
+        }
+        cursor: pointer;
+        width: 130px;
+        padding-right: 10px;
+        i{
+            margin-right: 5px;
+            line-height: 24px;
+            vertical-align: top;
+        }
+        time{
+            vertical-align: text-bottom;
+            line-height: 27px;
+            display: inline-block;
+        }
+    }
+    .avatar-column{
+        width: 60px;
+        .task-avatar{
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background-position: center center;
+            background-size: cover;
+            border-radius: 50%;
+            cursor: pointer;
+            
+        }
+    }
+    .task-description-column{
+        font-size: 13px;
+    }
 
-.checkbox-column{
-    width: 30px;
-    padding-right: 10px;
-}
-.datepicker-column{
-    cursor: pointer;
-    width: 130px;
-    padding-right: 10px;
-    i{
-        margin-right: 5px;
-        line-height: 24px;
-        vertical-align: top;
+    .task-completed{
+        .task-description-column{
+            color: #929292;
+            text-decoration: line-through;
+        }
+        .datepicker-column {
+            cursor: default;
+            & *{
+                color: #929292;
+            }
+        }
+        .avatar-column{
+            .task-avatar{
+                cursor: default;
+            }
+        }
     }
-    time{
-        vertical-align: text-bottom;
-        line-height: 27px;
-        display: inline-block;
-    }
 }
+
 
