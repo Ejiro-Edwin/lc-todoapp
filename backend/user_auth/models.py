@@ -3,8 +3,11 @@ from django.template.defaultfilters import slugify
 from django.db import models
 from datetime import datetime
 from django.utils import timezone
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, User
+from django.dispatch import receiver
+import uuid
+
 
 class AccountManager(BaseUserManager):
     def create_user(self, email, password=None, **kwargs):
@@ -53,3 +56,22 @@ class Account(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return self.is_admin
+
+class PasswordForgotRequest(models.Model):
+    hash = models.UUIDField(blank=False, editable=False)
+    user = models.ForeignKey(Account, related_name="password_requests", on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+    used = models.BooleanField(default=False)
+    ip_addr = models.GenericIPAddressField(blank=False, default='0.0.0.0')
+
+    class Meta:
+        ordering = ('date', )
+
+    @property
+    def uuid_str(self):
+        return str(self.hash)
+
+@receiver(pre_save, sender=PasswordForgotRequest)
+def generate_hash(sender, instance, *args, **kwargs):
+    if instance.pk is None:
+        instance.hash = uuid.uuid4()

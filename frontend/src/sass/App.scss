@@ -4,8 +4,9 @@
     color: rgba(0, 0, 0, 0.65);
 }
 .md-list-tile{
-    padding-left: 25px;
+    padding-left: 17px;
     padding-right: 25px;
+    width: 100%;
     i{
         font-size: 22px;
     }
@@ -14,8 +15,10 @@
     }
 }
 nav{
-    .md-toolbar{
-        height: 0;
+    @media screen and (min-width: 1025px){
+        .md-toolbar{
+            height: 0;
+        }
     }
 }
 .md-edit-dialog__blocked-field.md-edit-dialog__blocked-field{
@@ -26,67 +29,102 @@ nav{
         display: none;
     }
 }
+.md-tile-addon--avatar {
+    height: 32px;
+}
+.md-avatar{
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    .md-avatar-content{
+        font-size: 16px;
+    }
+}
 #add-task-dialog{
     top: 50% !important;
 }
-.md-table-body{
-    .md-table-column:first-child {
-        padding-left: 7px;
-    }
-    .checkbox-column{
-        width: 30px;
-        padding-right: 10px;
-    }
-    .datepicker-column{
-        & *{
-            transition: all linear .4s;
-        }
-        cursor: pointer;
-        width: 130px;
-        padding-right: 10px;
-        i{
-            margin-right: 5px;
-            line-height: 24px;
-            vertical-align: top;
-        }
-        time{
-            vertical-align: text-bottom;
-            line-height: 27px;
-            display: inline-block;
-        }
-    }
-    .avatar-column{
-        width: 60px;
-        .task-avatar{
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            background-position: center center;
-            background-size: cover;
-            border-radius: 50%;
-            cursor: pointer;
-            
-        }
-    }
-    .task-description-column{
-        font-size: 13px;
-    }
+.task-avatar{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 50%;
+    cursor: pointer;   
+}
 
-    .task-completed{
-        .task-description-column{
-            color: #929292;
-            text-decoration: line-through;
+.md-data-table{
+    table-layout: fixed;
+    .md-table-body{
+        .md-table-column:first-child {
+            padding-left: 7px;
         }
-        .datepicker-column {
-            cursor: default;
+        .checkbox-column{
+            width: 60px;
+            padding-right: 10px;
+        }
+        .datepicker-column{
             & *{
-                color: #929292;
+                transition: all linear .4s;
+            }
+            cursor: pointer;
+            width: 130px;
+            padding-right: 10px;
+            i{
+                margin-right: 5px;
+                line-height: 24px;
+                vertical-align: top;
+            }
+            time{
+                font-size: 13px;
+                vertical-align: text-bottom;
+                line-height: 27px;
+                display: inline-block;
             }
         }
         .avatar-column{
-            .task-avatar{
+            width: 60px;
+        }
+        .task-description-column{
+            height: auto;
+            word-break: break-word;
+            font-size: 13px;
+            & *{
+                font-size: 13px;
+            }
+            .md-edit-dialog__blocked-field{
+                height: auto;
+            }
+            .md-text-field-container--multiline-block{
+                margin-top: 10px;
+                margin-bottom: 7px;
+            }
+        }
+
+        .task-completed{
+            .task-description-column{
+                color: #929292;
+                text-decoration: line-through;
+                padding-top: 7px;
+                padding-bottom: 10px;
+                padding-right: 30px;
+            }
+            .datepicker-column {
                 cursor: default;
+                & *{
+                    color: #929292;
+                }
+            }
+            .avatar-column{
+                .task-avatar{
+                    cursor: default;
+                    filter: grayscale(1);
+                }
+            }
+            .md-avatar{
+                opacity: .7;
                 filter: grayscale(1);
+                cursor: default;
             }
         }
     }

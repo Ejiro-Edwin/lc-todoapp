@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'user_auth',
-    'todolist'
+    'todolist',
 ]
 
 MIDDLEWARE = [
@@ -143,3 +143,14 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media/')
 MEDIA_URL = '/media/'
+
+
+#E-mail definition 
+FROM_EMAIL = 'maricarolinep@gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'maricarolinep@gmail.com'
+EMAIL_HOST_PASSWORD = 'maryyDeus'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER

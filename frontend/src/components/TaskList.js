@@ -9,6 +9,12 @@ import {
 import TaskListItem from './TaskListItem';
 
 
+const styles = {
+    btn: {
+        margin: "0px 0px 8px 3px"
+    }
+}
+
 const TaskList = ({ ...props }) => (
     
       <div className="md-grid">
@@ -26,7 +32,25 @@ const TaskList = ({ ...props }) => (
         />
         <div className="md-cell md-cell--12">
             <div className="md-grid">
-                <h5 className="md-text--secondary md-cell md-cell--6">{props.todoName}</h5>
+                <div class="md-cell md-cell--6">
+                    <h3 className="md-text--secondary md-inline-block">{props.todoName}</h3>
+                    <Button 
+                        icon 
+                        tooltipLabel="Editar To-Do"
+                        onClick={() => props.openTodoDialog()}
+                        style={styles.btn}
+                        className="md-cell" >
+                        {'edit'}
+                    </Button>
+                    <Button 
+                        icon 
+                        tooltipLabel="Excluir To-Do"
+                        onClick={() => props.openDeleteTodoDialog()}
+                        style={styles.btn}
+                        className="md-cell" >
+                        {'delete'}
+                    </Button>
+                </div>
                 <div className="md-cell--right">
                     <Button 
                         raised 
@@ -44,7 +68,8 @@ const TaskList = ({ ...props }) => (
                         task={task} 
                         onTaskDescriptionChange={props.onTaskDescriptionChange}
                         onTaskDateClick={props.onTaskDateClick}
-                        onToggleTaskStatus={props.onToggleTaskStatus} />
+                        onToggleTaskStatus={props.onToggleTaskStatus}
+                        userDialogHandleVisibility={props.userDialogHandleVisibility} />
                 )}
               </TableBody>
             </DataTable>

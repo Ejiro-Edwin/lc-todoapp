@@ -10,19 +10,16 @@ import {
   renderAutocomplete,
   renderDatePicker,
 } from "../utils/ReactMDRedux.js"
-import {Field, reduxForm} from "redux-form"
-import {required} from "../utils/validations"
+import { Field, reduxForm } from 'redux-form';
+import { required, email } from "../utils/validations"
 
 
-const NewTaskForm = ({ ...props }) => {
+const LoginForm = ({ ...props }) => {
     const {
-        users, 
         handleSubmit, 
-        pristine, 
         submitting, 
         valid, 
         onSubmit,
-        onUserAutocomplete,
         errors
     } = props;
     return (
@@ -36,50 +33,40 @@ const NewTaskForm = ({ ...props }) => {
             {errors}
           </p>
         )}
-        <Grid noSpacing>
+        <Grid>
           <Cell size={12}>
             <Field
-              name="description"
-              label="Descrição"
-              validate={[required]}
-              required
+              name="email"
+              label="Email"
+              validate={[required, email]}
               component={renderTextField}
             />
           </Cell>
           <Cell size={12}>
             <Field
-              name="assign_to"
-              label="Atribuir para"
-              component={renderAutocomplete}
-              data={users}
-              onAutocomplete={onUserAutocomplete}
-          />
-          </Cell>
-          <Cell size={12}>
-            <Field
-              name="deadline"
-              label="Concluir até"
-              component={renderDatePicker}
-              portal={true}
-              lastChild={true}
-              icon={null}
-              disableScrollLocking={true}
-              renderNode={document.body}
-            />
+                name="password"
+                label="Senha"
+                type="password"
+                validate={[required]}
+                component={renderTextField}
+              />
           </Cell>
           <Button
             type="submit"
-            raised
-            secondary
+            primary
+            flat
             disabled={submitting}
+            className="md-full-width"
+
           >
-            Adicionar
+            Entrar
           </Button>
         </Grid>
       </form>
     )
 }
 
+
 export default reduxForm({
-  form: "NewTaskForm",
-})(NewTaskForm)
+  form: "loginForm",
+})(LoginForm)

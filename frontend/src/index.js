@@ -20,9 +20,12 @@ WebFontLoader.load({
   },
 });
 
-const history = createHistory()
+export const history = createHistory()
 
-const store = configureStore(history)
+
+export const store = configureStore(history)
+
+
 
 ReactDOM.render((
   <Provider store={store}>
@@ -32,3 +35,8 @@ ReactDOM.render((
   </Provider>
 ), document.getElementById('root'));
 registerServiceWorker();
+
+export default {
+  history,
+  store
+}

@@ -1,7 +1,8 @@
 import React from 'react'
 import {
     DialogContainer,
-    Avatar
+    Avatar,
+    FontIcon
  } from 'react-md';
 
 
@@ -10,14 +11,16 @@ const TaskAvatar = ({ ...props }) => {
         props.user?
            props.user.image?
             <div className="task-avatar" 
-                onClick={props.onClick || null}
+                onClick={props.onClick}
                 style={{
                     backgroundImage: `url(${props.user.image})`
                 }} />
             :
-            <Avatar>{props.user.first_name.slice('0')}</Avatar>
+            <Avatar suffix="pink" onClick={props.onClick}>{props.user.first_name.slice(0,1)}</Avatar>
         :
-        <div />
+        <Avatar 
+            onClick={props.onClick}
+            icon={<FontIcon>person_add</FontIcon>} />
     )
 }
 

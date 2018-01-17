@@ -17,7 +17,7 @@ class Task(SoftDeletableModel,TimeStampedModel):
     status = StatusField(default='incompleted')
     created_at = models.ForeignKey(Account, on_delete=models.DO_NOTHING)
     description = models.CharField(max_length=200)
-    assign_to = models.ForeignKey(Account, null=True, related_name='assign_to', on_delete=models.DO_NOTHING)
+    assign_to = models.ForeignKey(Account, null=True, blank=True, related_name='assign_to', on_delete=models.DO_NOTHING)
     todolist = models.ForeignKey(TodoList, on_delete=models.CASCADE)
     deadline = models.DateTimeField(null=True)
     completed_date = MonitorField(monitor='status', when=['completed'], null=True, default=None)

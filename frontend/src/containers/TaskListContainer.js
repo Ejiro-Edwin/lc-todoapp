@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
+import { toggleDialogTodo, toggleTodoDeleteDialog } from '../actions/todolist';
 import { fetchTodoTasks, updateTask, createTask } from '../actions/tasks';
 import { fetchUsers } from '../actions/users';
-import {  DialogContainer, Avatar } from 'react-md';
+import {  DialogContainer, Avatar, List, ListItem } from 'react-md';
 import NavLink from '../components/NavLink';
 import TaskList from '../components/TaskList';
-import imgLogo from '../images/todo-app-logo.png';
+import TaskAvatar from '../components/TaskAvatar';
 import moment from 'moment';
 import NewTaskForm from '../components/NewTaskForm';
-
 
 class TaskListContainer extends Component {
     constructor (props) {
@@ -17,6 +17,7 @@ class TaskListContainer extends Component {
             todoInfo: null,
             datePickerVisibility: false,
             taskDialogVisibility: false,
+            userDialogVisibility: false,
             datePickerValue: new Date(),
             selectedTaskId: 0,
             selectedUserId: 0,
@@ -30,17 +31,18 @@ componentDidMount = () => {
     this.props.fetchUsers();
 }
 componentWillReceiveProps = (nextProps) => {
-  if(this.props.tasks !== nextProps.tasks){ 
+  if(this.props.todolists !== nextProps.todolists || 
+     this.props.tasks !== nextProps.tasks){ 
     let todoInfo = nextProps.todolists.find(todolist =>
         todolist.id.toString() === nextProps.match.params.id
     );
     this.setState({todoInfo});
   }
   if((this.props.users !== nextProps.users) && nextProps.users){ 
-    const data = this.props.users.map(({ ...user }) => ({
+    const data = this.props.users.map(user => ({
         id: user.id,
         primaryText: `${user.first_name} ${user.last_name}`,
-        leftAvatar: <Avatar src={user.image} role="presentation" />,
+        leftAvatar: <TaskAvatar user={user} />,
       }));
     this.setState({usersData: data});
   }
@@ -55,6 +57,21 @@ handleVisibilityTaskDialog = (visible) => {
     this.setState({ taskDialogVisibility: visible });
 };
 
+handleVisibilityUserDialog = (visible, selectedTaskId) => {
+    this.setState({ userDialogVisibility: visible, selectedTaskId });
+}
+openTodoDialog = () => {
+    this.props.toggleDialogTodo(true)
+};
+
+closeTodoDialog = () => {
+    this.props.toggleDialogTodo(false)
+};
+
+openDeleteTodoDialog = () => {
+    this.props.toggleTodoDeleteDialog(true)
+}
+
 handleTaskDateClick = (selectedTaskId, taskDate) => {
     this.setState(
         {
@@ -64,11 +81,19 @@ handleTaskDateClick = (selectedTaskId, taskDate) => {
         () => this.handleVisibilityDatepicker(true)
     );
 }
-handleTaskDescriptionChange = (selectedTaskId, newDescription) => {
+handleTaskDescriptionChange = (selectedTaskId, event) => {
+    event.preventDefault();
     this.props.updateTask({
         id: selectedTaskId, 
-        description: newDescription
+        description: event.target.value
     });
+}
+handleTaskUserChange = (selectedUserId) => {
+    this.props.updateTask({
+        id: this.state.selectedTaskId, 
+        assign_to_id: selectedUserId
+    });
+    this.handleVisibilityUserDialog(false);
 }
 handleTaskDateChange = (newDate) => {
     let formattedDate = moment(newDate,"DD/MM/YYYY").toISOString();
@@ -84,22 +109,31 @@ handleToggleTaskStatus = (selectedTaskId, newStatus) => {
         status: newStatus? 'completed' : 'incompleted'
     })
 }
-handleUserAutocomplete = (value, index, matches) => {
-    this.setState({selectedUserId: matches[index].id})
-}
 formatTaskBeforeSubmit = (json) => {
     this.props.createTask({
-        assign_to_id: this.state.selectedUserId,
-        deadline: moment(json.deadline, "DD/MM/YYYY").toISOString(),
+        assign_to_id: this.state.selectedUserId == 0? null: this.state.selectedUserId,
+        deadline: json.deadline? moment(json.deadline, "DD/MM/YYYY").toISOString() : null,
         description: json.description,
         todolist: this.props.match.params.id
     });
     this.handleVisibilityTaskDialog(false);
 }
 
+handleUserAutocomplete = (value, index, matches) => {
+    this.setState({selectedUserId: matches[index].id})
+}
+
+
 render(){
     const tasks  = this.props.tasks || [];
-    const { datePickerVisibility, taskDialogVisibility, datePickerValue, todoInfo, usersData } = this.state;
+    const { 
+        datePickerVisibility, 
+        taskDialogVisibility, 
+        userDialogVisibility,
+        datePickerValue, 
+        todoInfo, 
+        usersData 
+    } = this.state;
     return (
         <div>
             <TaskList 
@@ -112,7 +146,10 @@ render(){
                 onTaskDateChange={this.handleTaskDateChange}
                 onTaskDescriptionChange={this.handleTaskDescriptionChange}
                 onToggleTaskStatus={this.handleToggleTaskStatus}
-                taskDialogHandleVisibility={this.handleVisibilityTaskDialog} />
+                taskDialogHandleVisibility={this.handleVisibilityTaskDialog}
+                userDialogHandleVisibility={this.handleVisibilityUserDialog} 
+                openTodoDialog={this.openTodoDialog}
+                openDeleteTodoDialog={this.openDeleteTodoDialog}/>
             <DialogContainer
                 id="add-task-dialog"
                 aria-labelledby="add-dialog"
@@ -127,6 +164,25 @@ render(){
                     onSubmit={this.formatTaskBeforeSubmit}
                     onUserAutocomplete={this.handleUserAutocomplete}
                     users={usersData} />
+            </DialogContainer>
+            <DialogContainer
+                id="select-user-dialog"
+                aria-labelledby="user-dialog"
+                visible={userDialogVisibility}
+                onHide={() => this.handleVisibilityUserDialog(false)}
+                actions={null}
+                title="Selecionar usuário"
+                width={400}
+                focusOnMount={false}
+                containFocus={false} >
+                <List>
+                    {usersData.map(user => 
+                        <ListItem
+                            primaryText={user.primaryText}
+                            leftAvatar={user.leftAvatar} 
+                            onClick={() => this.handleTaskUserChange(user.id)}/>
+                    )}
+                </List>
             </DialogContainer>
         </div>
         )
@@ -152,6 +208,12 @@ const mapDispatchToProps = (dispatch) => ({
     },
     createTask: (parameters) => {
         dispatch(createTask(parameters))
+    },
+    toggleDialogTodo: (visible) => {
+        dispatch(toggleDialogTodo(visible, true))
+    },
+    toggleTodoDeleteDialog: (visible) => {
+        dispatch(toggleTodoDeleteDialog(visible))
     }
 })
 

@@ -27,11 +27,11 @@ export default function tasks(state = initialState.tasks, action) {
     case tasksConstants.UPDATE_TASK_SUCCESS:
       return {
         ...state,
-        data: state.data.map( todo => { 
-          if(todo.id === action.payload.id){
+        data: state.data.map( task => { 
+          if(task.id === action.payload.id){
             return action.payload
           } 
-          return todo
+          return task
         })
       }
     case tasksConstants.UPDATE_TASK_FAILURE:
