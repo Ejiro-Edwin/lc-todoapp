@@ -33,8 +33,8 @@ nav{
     height: 32px;
 }
 .md-avatar{
-    height: 30px;
-    width: 30px;
+    height: 30px !important;
+    width: 30px !important;
     cursor: pointer;
     .md-avatar-content{
         font-size: 16px;

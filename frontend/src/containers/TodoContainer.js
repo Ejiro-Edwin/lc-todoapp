@@ -9,7 +9,6 @@ import {
 } from '../actions/todolist';
 import { DialogContainer, Button } from 'react-md';
 import NewTodoForm from '../components/NewTodoForm';
-import { push } from 'react-router-redux';
 import { history } from '../index';
 
 class TodoManagerContainer extends Component {
@@ -46,16 +45,6 @@ class TodoManagerContainer extends Component {
         this.props.toggleTodoDeleteDialog(false)
     };
 
-    renderTodoListItems = () => {
-        if(this.props.todolists.length > 0){
-            const todolistArray = this.props.todolists.map(todolist => ({
-                    label: todolist.title,
-                    to: `/todo/${todolist.id}`,
-                }));
-            return todolistArray;
-        }
-        return [];
-    }
     saveTodo = (parameters) => {
         this.props.createTodo(parameters);
         this.closeTodoDialog();
@@ -77,33 +66,12 @@ class TodoManagerContainer extends Component {
     }
 
     render(){
-        const { 
-            todolists, 
-            location, 
-            isAuthenticated, 
-            children, 
+        const {  
             isTodoDialogOpen, 
             isDeleteTodoDialogOpen, 
-            edit,
-            match
+            edit
         } = this.props;
         const { actualTodo } = this.state;
-        const arrayNavItems = [
-            {
-                exact: true,
-                label: 'Dashboard',
-                to: '/',
-                icon: 'dashboard',
-            },{
-                label: 'To-Dos',
-                iconLabel: 'Nova To-do',
-                subheader: true,
-                icon: 'assignments',
-                rightIcon: 'add_circle_outline',
-                rightIconAction: this.openTodoDialog
-            }, 
-            ...this.renderTodoListItems()
-        ];
         return (
                 <div>
                     <DialogContainer

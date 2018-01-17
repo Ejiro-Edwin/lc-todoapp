@@ -1,26 +1,20 @@
-import React, {Component} from "react"
+import React from "react"
 import {
     Grid, 
     Cell,
-    CardText,
     Button
 } from "react-md";
-import {
-  renderTextField,
-  renderAutocomplete,
-  renderDatePicker,
-} from "../utils/ReactMDRedux.js"
+import { renderTextField } from "../utils/ReactMDRedux.js"
 import { Field, reduxForm } from 'redux-form';
 import { required, email } from "../utils/validations"
+import { Link } from "react-router-dom";
 
 
 const LoginForm = ({ ...props }) => {
     const {
         handleSubmit, 
         submitting, 
-        valid, 
-        onSubmit,
-        errors
+        onSubmit
     } = props;
     return (
       <form
@@ -28,11 +22,6 @@ const LoginForm = ({ ...props }) => {
         style={{margin: 0, width: "100%"}}
         className="md-text--theme-primary"
       >
-        {!valid && (
-          <p className="md-body-1 md-text-field-message-container--error">
-            {errors}
-          </p>
-        )}
         <Grid>
           <Cell size={12}>
             <Field
@@ -51,16 +40,21 @@ const LoginForm = ({ ...props }) => {
                 component={renderTextField}
               />
           </Cell>
-          <Button
-            type="submit"
-            primary
-            flat
-            disabled={submitting}
-            className="md-full-width"
+          <Cell size={12} className="md-text-center">
+            <Link to="/auth/forgot-password" style={{color: '#636363'}}>Esqueceu a senha?</Link>
+          </Cell>
+          <Cell size={12}>
+            <Button
+              type="submit"
+              primary
+              flat
+              disabled={submitting}
+              className="md-full-width"
 
-          >
-            Entrar
-          </Button>
+            >
+              Entrar
+            </Button>
+          </Cell>
         </Grid>
       </form>
     )

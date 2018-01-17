@@ -118,6 +118,10 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.MultiPartParser',
     )
 }
 CORS_ORIGIN_ALLOW_ALL= True
@@ -146,11 +150,11 @@ MEDIA_URL = '/media/'
 
 
 #E-mail definition 
-FROM_EMAIL = 'maricarolinep@gmail.com'
+FROM_EMAIL = 'testelabcodes@gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'maricarolinep@gmail.com'
-EMAIL_HOST_PASSWORD = 'maryyDeus'
+EMAIL_HOST_USER = 'testelabcodes@gmail.com'
+EMAIL_HOST_PASSWORD = 'labtodo123'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER

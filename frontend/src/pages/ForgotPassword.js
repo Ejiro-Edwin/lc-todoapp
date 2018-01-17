@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ForgotPasswordForm from '../components/ForgotPasswordForm';
-import {reduxForm } from 'redux-form';
-import { login } from '../actions/auth';
+import { forgotPassword } from '../actions/auth';
 import { connect } from 'react-redux';
 
 class ForgotPassword extends Component {
@@ -16,7 +15,7 @@ class ForgotPassword extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit: (parameters) => 
-    dispatch(login(parameters))
+    dispatch(forgotPassword(parameters))
 })
 
 export default connect(

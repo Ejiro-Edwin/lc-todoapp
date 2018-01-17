@@ -8,10 +8,11 @@ import {
   renderTextField,
 } from "../utils/ReactMDRedux.js"
 import {Field, reduxForm} from "redux-form"
-import { required, email } from "../utils/validations"
+import { required } from "../utils/validations"
+import { confirmation } from "redux-form-validators"
 
 
-const ForgotPasswordForm = ({ ...props }) => {
+const RecoverPasswordForm = ({ ...props }) => {
     const {
         handleSubmit, 
         submitting, 
@@ -23,18 +24,28 @@ const ForgotPasswordForm = ({ ...props }) => {
         style={{margin: 0, width: "100%"}}
         className="md-text--theme-primary"
       >
-        <Grid>
-          <Cell size={12} className="md-text-center">
-              <h3>Restaurar senha</h3>
-          </Cell>
-          <Cell size={12}>
-              <p>Digite seu email no campo abaixo e te enviaremos um e-mail com instuções para restaurar sua senha</p>
+      <Grid >
+        <Cell size={12} className="md-text-center">
+              <h3>Criar nova senha</h3>
           </Cell>
           <Cell size={12}>
             <Field
-              name="email"
-              label="Email"
-              validate={[required, email]}
+              name="password"
+              label="Senha"
+              type="password"
+              validate={[required]}
+              required
+              component={renderTextField}
+            />
+          </Cell>
+          <Cell size={12}>
+            <Field
+              name="passwordConfirmation"
+              label="Confirme a senha"
+              type="password"
+              validate={
+                [required, 
+                confirmation({ field: "password", fieldLabel: "Password", message: 'As senhas não são iguais' })]}
               required
               component={renderTextField}
             />
@@ -48,7 +59,7 @@ const ForgotPasswordForm = ({ ...props }) => {
               className="md-full-width md-text-center"
 
             >
-              ENVIAR
+              Criar senha
             </Button>
           </Cell>
         </Grid>
@@ -57,5 +68,5 @@ const ForgotPasswordForm = ({ ...props }) => {
 }
 
 export default reduxForm({
-  form: "ForgotPasswordForm",
-})(ForgotPasswordForm)
+  form: "RecoverPasswordForm",
+})(RecoverPasswordForm)

@@ -1,8 +1,7 @@
-import React, {Component} from "react"
+import React from "react"
 import {
     Grid, 
     Cell,
-    CardText,
     Button
 } from "react-md";
 import {
@@ -18,12 +17,9 @@ const NewTaskForm = ({ ...props }) => {
     const {
         users, 
         handleSubmit, 
-        pristine, 
         submitting, 
-        valid, 
         onSubmit,
         onUserAutocomplete,
-        errors
     } = props;
     return (
       <form
@@ -31,11 +27,6 @@ const NewTaskForm = ({ ...props }) => {
         style={{margin: 0, width: "100%"}}
         className="md-text--theme-primary"
       >
-        {!valid && (
-          <p className="md-body-1 md-text-field-message-container--error">
-            {errors}
-          </p>
-        )}
         <Grid noSpacing>
           <Cell size={12}>
             <Field

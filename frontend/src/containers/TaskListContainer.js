@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { toggleDialogTodo, toggleTodoDeleteDialog } from '../actions/todolist';
 import { fetchTodoTasks, updateTask, createTask } from '../actions/tasks';
 import { fetchUsers } from '../actions/users';
-import {  DialogContainer, Avatar, List, ListItem } from 'react-md';
-import NavLink from '../components/NavLink';
+import {  DialogContainer, List, ListItem } from 'react-md';
 import TaskList from '../components/TaskList';
 import TaskAvatar from '../components/TaskAvatar';
 import moment from 'moment';
@@ -111,7 +110,7 @@ handleToggleTaskStatus = (selectedTaskId, newStatus) => {
 }
 formatTaskBeforeSubmit = (json) => {
     this.props.createTask({
-        assign_to_id: this.state.selectedUserId == 0? null: this.state.selectedUserId,
+        assign_to_id: this.state.selectedUserId === 0? null: this.state.selectedUserId,
         deadline: json.deadline? moment(json.deadline, "DD/MM/YYYY").toISOString() : null,
         description: json.description,
         todolist: this.props.match.params.id
@@ -176,8 +175,9 @@ render(){
                 focusOnMount={false}
                 containFocus={false} >
                 <List>
-                    {usersData.map(user => 
+                    {usersData.map((user,i) => 
                         <ListItem
+                            key={i}
                             primaryText={user.primaryText}
                             leftAvatar={user.leftAvatar} 
                             onClick={() => this.handleTaskUserChange(user.id)}/>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link as RouterLink, Route } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { FontIcon, ListItem, Subheader, Button } from 'react-md';
 
 const styles = {

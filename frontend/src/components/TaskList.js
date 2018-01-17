@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
-    Subheader,
     DatePicker,
     DataTable,
     TableBody,
-    Button
+    Button,
+    Grid,
+    Cell
   } from 'react-md';
 import TaskListItem from './TaskListItem';
 
@@ -17,7 +18,7 @@ const styles = {
 
 const TaskList = ({ ...props }) => (
     
-      <div className="md-grid">
+      <Grid noSpacing>
         <DatePicker
             id="date-picker-controlled"
             label="Select date"
@@ -30,9 +31,9 @@ const TaskList = ({ ...props }) => (
             onChange={(value) => props.onTaskDateChange(value)}
             onVisibilityChange={props.datePickerHandleVisibility}
         />
-        <div className="md-cell md-cell--12">
-            <div className="md-grid">
-                <div class="md-cell md-cell--6">
+        <Cell size={12}>
+            <Grid>
+                <Cell size={6} tabletSize={3} phoneSize={3}>
                     <h3 className="md-text--secondary md-inline-block">{props.todoName}</h3>
                     <Button 
                         icon 
@@ -50,31 +51,36 @@ const TaskList = ({ ...props }) => (
                         className="md-cell" >
                         {'delete'}
                     </Button>
-                </div>
-                <div className="md-cell--right">
+                </Cell>
                     <Button 
                         raised 
                         primary 
                         iconChildren="add"
+                        className="md-cell--right"
                         onClick={() => props.taskDialogHandleVisibility(true)}>
                             Nova Task
                     </Button>
-                </div>
-            </div>
+            </Grid>
             <DataTable plain>
               <TableBody>
-                {props.tasks.map(task =>
-                    <TaskListItem 
-                        task={task} 
-                        onTaskDescriptionChange={props.onTaskDescriptionChange}
-                        onTaskDateClick={props.onTaskDateClick}
-                        onToggleTaskStatus={props.onToggleTaskStatus}
-                        userDialogHandleVisibility={props.userDialogHandleVisibility} />
-                )}
+                {props.tasks.length > 0?
+                    props.tasks.map((task,i) =>
+                        <TaskListItem 
+                            key={i}
+                            task={task} 
+                            onTaskDescriptionChange={props.onTaskDescriptionChange}
+                            onTaskDateClick={props.onTaskDateClick}
+                            onToggleTaskStatus={props.onToggleTaskStatus}
+                            userDialogHandleVisibility={props.userDialogHandleVisibility} />
+                    )
+                    : 
+                    <Cell size={12}>
+                        <p>Você ainda não tem tasks cadastradas nesta to-do</p>
+                    </Cell>}
               </TableBody>
             </DataTable>
-        </div>
-    </div>
+        </Cell>
+    </Grid>
 )
 
 export default TaskList;

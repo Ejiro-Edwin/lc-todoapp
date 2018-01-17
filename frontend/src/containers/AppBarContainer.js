@@ -1,15 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { fetchTodoLists, toggleDialogTodo } from '../actions/todolist';
-import { NavigationDrawer, DialogContainer } from 'react-md';
+import { NavigationDrawer } from 'react-md';
 import NavLink from '../components/NavLink';
 import imgLogo from '../images/todo-app-logo.png';
-import NewTodoForm from '../components/NewTodoForm';
 
 class AppBarContainer extends Component {
-    constructor (props) {
-        super(props)   
-    }
 
     componentWillReceiveProps = (nextProps) => {
         if((this.props.isAuthenticated !== nextProps.isAuthenticated)
@@ -33,7 +29,7 @@ class AppBarContainer extends Component {
         this.props.toggleDialogTodo(true)
     }
     render(){
-        const { todolists, location, isAuthenticated, children } = this.props;
+        const { location, isAuthenticated, children } = this.props;
         const arrayNavItems = [
             {
                 exact: true,
@@ -56,7 +52,7 @@ class AppBarContainer extends Component {
             <NavigationDrawer
                 toolbarTitle={
                 <div className="logo">
-                    <img width={30} style={{display: 'inline-block',verticalAlign: 'middle', marginRight: '1rem'}} src={imgLogo}/>
+                    <img width={30} alt="logo" style={{display: 'inline-block',verticalAlign: 'middle', marginRight: '1rem'}} src={imgLogo}/>
                     To Do App
                 </div>}
                 transitionEnterTimeout={null}
