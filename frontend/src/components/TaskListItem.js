@@ -9,6 +9,7 @@ import {
 import Moment from 'react-moment';
 import TaskAvatar from './TaskAvatar';
 import { calendarStrings } from '../constants/calendar';
+import { maxLength } from '../utils/validations';
 import '../../node_modules/moment/locale/pt-br';
 
 const TaskListItem = ({task, ...props}) => {
@@ -29,13 +30,18 @@ const TaskListItem = ({task, ...props}) => {
                 <TableColumn className="task-description-column">{task.description}</TableColumn>
                 :
                 <EditDialogColumn 
-                    className="task-description-column"
+                    className="task-description-column "
+                    rows={1}
                     inlineIcon={null}
+                    maxRows={3}
                     placeholder="Descrição" 
                     defaultValue={task.description} 
+                    onKeyDown={ e => 
+                        e.target.value = e.target.value.slice(0,180)
+                    }
                     onKeyPress={e => {
                         e.key === "Enter"? 
-                        props.onTaskDescriptionChange(task.id, e.target.value)
+                        props.onTaskDescriptionChange(task.id, e)
                         : null
                     }}
                     inline />
@@ -47,12 +53,16 @@ const TaskListItem = ({task, ...props}) => {
                     : null }
                 } 
                 className="datepicker-column">
-                <FontIcon>alarm_on</FontIcon>
-                <Moment  
-                    calendar={calendarStrings}>{task.deadline}</Moment>
+                <FontIcon>alarm</FontIcon>
+                {task.deadline?
+                    <Moment  
+                        calendar={calendarStrings}>{task.deadline}
+                    </Moment>: null}
             </TableColumn>
             <TableColumn className="avatar-column">
-                <TaskAvatar user={task.assign_to} role="presentation" />
+                <TaskAvatar 
+                    onClick={() => {!completed? props.userDialogHandleVisibility(true, task.id) : null}}
+                    user={task.assign_to} role="presentation" />
             </TableColumn>
         </TableRow>
     )

@@ -7,5 +7,7 @@ requests==2.12.4
 # Time zones support
 pytz==2016.10
 
-djangorestframework==3.6.4
-djangorestframework-jwt==1.8.0
+Pillow
+django-model-utils
+djangorestframework==3.7.7
+djangorestframework_simplejwt

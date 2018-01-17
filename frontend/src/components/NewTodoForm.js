@@ -6,17 +6,14 @@ import {
     Button
 } from "react-md";
 import {
-  renderTextField,
-  renderAutocomplete,
-  renderDatePicker,
+  renderTextField
 } from "../utils/ReactMDRedux.js"
 import {Field, reduxForm} from "redux-form"
 import {required} from "../utils/validations"
 
 
-const NewTaskForm = ({ ...props }) => {
+const NewTodoForm = ({ ...props }) => {
     const {
-        users, 
         handleSubmit, 
         pristine, 
         submitting, 
@@ -39,41 +36,21 @@ const NewTaskForm = ({ ...props }) => {
         <Grid noSpacing>
           <Cell size={12}>
             <Field
-              name="description"
-              label="Descrição"
+              name="title"
+              label="Título"
               validate={[required]}
               required
               component={renderTextField}
-            />
-          </Cell>
-          <Cell size={12}>
-            <Field
-              name="assign_to"
-              label="Atribuir para"
-              component={renderAutocomplete}
-              data={users}
-              onAutocomplete={onUserAutocomplete}
-          />
-          </Cell>
-          <Cell size={12}>
-            <Field
-              name="deadline"
-              label="Concluir até"
-              component={renderDatePicker}
-              portal={true}
-              lastChild={true}
-              icon={null}
-              disableScrollLocking={true}
-              renderNode={document.body}
             />
           </Cell>
           <Button
             type="submit"
             raised
             secondary
+            style={{marginTop: '1rem'}}
             disabled={submitting}
           >
-            Adicionar
+            Salvar
           </Button>
         </Grid>
       </form>
@@ -81,5 +58,6 @@ const NewTaskForm = ({ ...props }) => {
 }
 
 export default reduxForm({
-  form: "NewTaskForm",
-})(NewTaskForm)
+  form: "NewTodoForm",
+  enableReinitialize : true
+})(NewTodoForm)

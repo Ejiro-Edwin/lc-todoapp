@@ -27,7 +27,7 @@ export const renderTextField = ({
       label={label}
       value={input.value}
       type={type}
-      error={touched && String(error).length > 0}
+      error={touched && error}
       errorText={errorText || error}
       onChange={input.onChange}
       {...custom}
@@ -36,31 +36,6 @@ export const renderTextField = ({
 }
 
 
-
-
-export const renderTextFieldMax7 = ({
-  input,
-  type = "text",
-  errorText,
-  label,
-  meta: {touched, error},
-  ...custom
-}) => {
-  return (
-    <TextField
-      id={input.name}
-      name={input.name}
-      label={label}
-      value={input.value}
-      type={type}
-      maxLength = {7}
-      error={touched && String(error).length > 0}
-      errorText={errorText || error}
-      onChange={input.onChange}
-      {...custom}
-    />
-  )
-}
 
 export const renderAutocomplete = ({
   input,
@@ -69,7 +44,7 @@ export const renderAutocomplete = ({
   meta: {touched, error},
   ...custom
 }) => {
-  // TODO: find out why touched ins't been set to true
+  
   return (
     <Autocomplete
       id={input.id || input.name}
@@ -77,7 +52,7 @@ export const renderAutocomplete = ({
       name={input.name}
       onChange={input.onChange}
       onAutocomplete={value => input.onChange(value)}
-      error={touched && String(error).length > 0}
+      error={touched && error}
       errorText={errorText || error}
       placeholder={label}
       {...custom}
@@ -115,7 +90,7 @@ export const renderDatePicker = ({
     label={label}
     onChange={input.onChange}
     autoOk
-    error={touched && String(error).length > 0}
+    error={touched && error}
     errorText={errorText || error}
     displayMode={displayMode}
     locales={locales}

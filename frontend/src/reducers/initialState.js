@@ -9,7 +9,10 @@ const initialState = {
     },
     todolists: {
         data: [],
-        isFetching: false
+        isFetching: false,
+        isTodoDialogOpen: false,
+        isDeleteTodoDialogOpen: false,
+        edit: false
     },
     tasks: {
         data: [],

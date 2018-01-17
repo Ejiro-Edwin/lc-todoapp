@@ -14,7 +14,7 @@ class TodoListSerializer(serializers.ModelSerializer):
 
 class TaskSerializer(serializers.ModelSerializer):
     created_at = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
-    assign_to_id = serializers.PrimaryKeyRelatedField(source='assign_to',  queryset=Account.objects.all(), )
+    assign_to_id = serializers.PrimaryKeyRelatedField(source='assign_to',  queryset=Account.objects.all(), allow_null=True, required=False)
     assign_to = AccountSerializer(read_only=True)
     class Meta:
         model = Task

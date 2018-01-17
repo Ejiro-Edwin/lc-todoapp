@@ -23,10 +23,10 @@ urlpatterns = [
 
     # Browsable API
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-
-
+    path('api/users/forgot/', views.PasswordRecoveryAPIView.as_view(), name='forgot_password'),
+    path('api/users/reset/', views.PasswordResetAPIView.as_view(), name='reset_password'),
     path('admin/', admin.site.urls),
 ] 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-print(router.urls)
+print(urlpatterns)

@@ -6,27 +6,29 @@ import PrivateRoute from './containers/PrivateRoute';
 import AppBarContainer from './containers/AppBarContainer';
 import Home from './pages/Home';
 import Tasks from './pages/Tasks';
-import Page2 from './pages/Page2';
-import Auth from './pages/Auth';
-import AuthContainer from './containers/AuthContainer';
+import Login from './pages/Login';
+import AuthRoute from './containers/AuthRoute';
 import NotificationsContainer from './containers/NotificationsContainer';
-import store from './store';
+import ForgotPassword from './pages/ForgotPassword';
+import ForgotPasswordDone from './pages/ForgotPasswordDone';
 import './css/App.css';
 
 class App extends Component {
   render() {
     return (
       <Route
-        render={({ location }) => (
-          <AppBarContainer location={location}>
+        render={({ location, match }) => (
+          <AppBarContainer location={location} match={match}>
               <Switch key={location.key}>
-                  <Route exact path="/auth" location={location} component={AuthContainer} />
-                  <PrivateRoute exact path="/" location={location} component={Home} />
-                  <PrivateRoute path="/todo/:id" location={location} component={Tasks} />
-                  <PrivateRoute path="/page-2" location={location} component={Page2} />
+                  <AuthRoute exact path="/auth/login" component={Login} />
+                  <AuthRoute exact path="/auth/forgot-password" component={ForgotPassword} />
+                  <AuthRoute exact path="/auth/forgot-password-done" component={ForgotPasswordDone} />
+                  <AuthRoute exact path="/auth/login" component={Login} />
+                  <PrivateRoute exact path="/" location={location} match={match} component={Home} />
+                  <PrivateRoute path="/todo/:id" location={location} match={match} component={Tasks} />
+                  <NotificationsContainer />
               </Switch>
-              <NotificationsContainer />
-            </AppBarContainer>
+          </AppBarContainer>
         )}
       />
     );

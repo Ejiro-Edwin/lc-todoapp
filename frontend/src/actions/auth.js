@@ -1,7 +1,7 @@
 import { RSAA } from 'redux-api-middleware';
 import { authConstants } from '../constants/auth';
 
-export const login = (email, password) => ({
+export const login = (parameters) => ({
     [RSAA]: {
       types: [
           authConstants.LOGIN_REQUEST, 
@@ -15,7 +15,7 @@ export const login = (email, password) => ({
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json' },
-      body: JSON.stringify({email, password})
+      body: JSON.stringify(parameters)
     }
   });
 

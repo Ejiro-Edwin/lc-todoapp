@@ -11,23 +11,20 @@ import {
   renderDatePicker,
 } from "../utils/ReactMDRedux.js"
 import {Field, reduxForm} from "redux-form"
-import {required} from "../utils/validations"
+import { required, email } from "../utils/validations"
 
 
-const NewTaskForm = ({ ...props }) => {
+const NewPasswordForm = ({ ...props }) => {
     const {
-        users, 
         handleSubmit, 
-        pristine, 
         submitting, 
         valid, 
-        onSubmit,
-        onUserAutocomplete,
+        newPasswordSubmit,
         errors
     } = props;
     return (
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(newPasswordSubmit)}
         style={{margin: 0, width: "100%"}}
         className="md-text--theme-primary"
       >
@@ -39,32 +36,11 @@ const NewTaskForm = ({ ...props }) => {
         <Grid noSpacing>
           <Cell size={12}>
             <Field
-              name="description"
-              label="Descrição"
-              validate={[required]}
+              name="email"
+              label="Email"
+              validate={[required, email]}
               required
               component={renderTextField}
-            />
-          </Cell>
-          <Cell size={12}>
-            <Field
-              name="assign_to"
-              label="Atribuir para"
-              component={renderAutocomplete}
-              data={users}
-              onAutocomplete={onUserAutocomplete}
-          />
-          </Cell>
-          <Cell size={12}>
-            <Field
-              name="deadline"
-              label="Concluir até"
-              component={renderDatePicker}
-              portal={true}
-              lastChild={true}
-              icon={null}
-              disableScrollLocking={true}
-              renderNode={document.body}
             />
           </Cell>
           <Button
@@ -81,5 +57,5 @@ const NewTaskForm = ({ ...props }) => {
 }
 
 export default reduxForm({
-  form: "NewTaskForm",
-})(NewTaskForm)
+  form: "NewPasswordForm",
+})(NewPasswordForm)
