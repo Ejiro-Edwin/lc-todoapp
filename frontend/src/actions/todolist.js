@@ -1,6 +1,5 @@
 import { RSAA } from 'redux-api-middleware';
 import { todoListConstants } from '../constants/todolists';
-import { push } from 'react-router-redux';
 
 
 export const fetchTodoLists = () => ({
@@ -10,7 +9,7 @@ export const fetchTodoLists = () => ({
         todoListConstants.FETCH_TODOLISTS_SUCCESS, 
         todoListConstants.FETCH_TODOLISTS_FAILURE, 
       ],
-    endpoint: 'http://localhost:8000/api/v1/todolists/',
+    endpoint: '/api/v1/todolists/',
     method: 'GET',
     headers: { 
       'Content-Type': 'application/json' 
@@ -28,7 +27,7 @@ export const createTodo = (parameters) => ({
 		  },
 		  todoListConstants.CREATE_TODO_FAILURE, 
 		],
-	  endpoint: `http://localhost:8000/api/v1/todolists/`,
+	  endpoint: `/api/v1/todolists/`,
 	  method: 'POST',
 	  headers: { 
 		'Content-Type': 'application/json' 
@@ -47,7 +46,7 @@ export const updateTodo = (parameters) => ({
 		  },
 		  todoListConstants.UPDATE_TODO_FAILURE, 
 		],
-	  endpoint: `http://localhost:8000/api/v1/todolists/${parameters.id}/`,
+	  endpoint: `/api/v1/todolists/${parameters.id}/`,
 	  method: 'PATCH',
 	  headers: { 
 		'Content-Type': 'application/json' 
@@ -66,7 +65,7 @@ export const updateTodo = (parameters) => ({
 				},
 				todoListConstants.DELETE_TODO_FAILURE, 
 			],
-			endpoint: `http://localhost:8000/api/v1/todolists/${todoId}/`,
+			endpoint: `/api/v1/todolists/${todoId}/`,
 			method: 'DELETE',
 			headers: { 
 				'Content-Type': 'application/json' 

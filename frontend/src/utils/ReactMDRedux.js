@@ -27,8 +27,8 @@ export const renderTextField = ({
       label={label}
       value={input.value}
       type={type}
-      error={touched && error}
-      errorText={errorText || error}
+      error={touched && (typeof error !== 'string'? error : error.length > 0)}
+      errorText={errorText || (typeof error === 'string'? error : '')}
       onChange={input.onChange}
       {...custom}
     />
@@ -176,16 +176,24 @@ export const renderFileUploadField = ({
   accept,
   ...custom
 }) => (
+  <div>
   <FileInput
     id={input.name}
     name={input.name}
     accept={accept}
     label={"Selecione um arquivo"}
-    value={null}
+    value={undefined}
+    required
     onChange={input.onChange}
-    error={touched && String(error).length > 0}
-    errorText={errorText || error}
     {...custom}
-/>
+  />
+    {touched && error? 
+    <div className="md-text-field-message-container md-text-field-message-container--right-icon-offset md-full-width md-text--error">
+      <div aria-hidden="false" className="md-text-field-message md-text-field-message--active">
+      {error}
+      </div>
+    </div>
+     : null }
+  </div>
 )
 

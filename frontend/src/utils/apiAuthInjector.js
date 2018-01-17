@@ -12,9 +12,11 @@ export const authLocalManager = store => next => action => {
         errorMessage
       })
   } 
+  
   if (action.payload && (action.payload.status === 404)) {
     history.push('/');
   }
+  
   return next(action)
 }
 

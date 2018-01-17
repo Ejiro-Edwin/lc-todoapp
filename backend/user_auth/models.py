@@ -29,7 +29,7 @@ class AccountManager(BaseUserManager):
         return account
 
 class Account(AbstractBaseUser):
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, error_messages={'unique':"Já existe uma conta com esse email."})
     first_name = models.CharField(max_length=40, blank=True)
     last_name = models.CharField(max_length=40, blank=True)
     is_admin = models.BooleanField(default=False)

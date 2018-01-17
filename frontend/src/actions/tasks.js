@@ -8,7 +8,7 @@ export const fetchTodoTasks = (todoListId) => ({
 		  tasksConstants.FETCH_TODOTASKS_SUCCESS, 
 		  tasksConstants.FETCH_TODOTASKS_FAILURE, 
 		],
-	  endpoint: `http://localhost:8000/api/v1/todolists/${todoListId}/tasks/`,
+	  endpoint: `/api/v1/todolists/${todoListId}/tasks/`,
 	  method: 'GET',
 	  headers: { 
 		'Content-Type': 'application/json' 
@@ -26,7 +26,7 @@ export const updateTask = (parameters) => ({
 		  },
 		  tasksConstants.UPDATE_TASK_FAILURE, 
 		],
-	  endpoint: `http://localhost:8000/api/v1/tasks/${parameters.id}/`,
+	  endpoint: `/api/v1/tasks/${parameters.id}/`,
 	  method: 'PATCH',
 	  headers: { 
 		'Content-Type': 'application/json' 
@@ -45,7 +45,7 @@ export const createTask = (parameters) => ({
 		  },
 		  tasksConstants.CREATE_TASK_FAILURE, 
 		],
-	  endpoint: `http://localhost:8000/api/v1/tasks/`,
+	  endpoint: `/api/v1/tasks/`,
 	  method: 'POST',
 	  headers: { 
 		'Content-Type': 'application/json' 

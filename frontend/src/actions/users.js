@@ -8,7 +8,7 @@ export const fetchUsers = () => ({
           usersConstants.USERS_SUCCESS, 
           usersConstants.USERS_FAILURE
         ],
-      endpoint: 'http://localhost:8000/api/v1/users/',
+      endpoint: '/api/v1/users/',
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     }

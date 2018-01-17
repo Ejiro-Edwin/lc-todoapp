@@ -9,13 +9,16 @@ from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from django.core.mail import send_mail
+from .send_email import send_html_mail
 from django.conf import settings
+from rest_framework.parsers import MultiPartParser, JSONParser
 
 class UserViewSet(viewsets.ModelViewSet):
     """User API Views"""
     queryset = Account.objects.all()
-    serializer_class = AccountSerializer
+    serializer_class= AccountSerializer
+    parser_classes = (MultiPartParser, )
+    
 
 
 class PasswordRecoveryAPIView(views.APIView):
@@ -39,20 +42,20 @@ class PasswordRecoveryAPIView(views.APIView):
         preq.save()
 
         #send recovery email
-        subject = "Olá, você solicitou a recuperação de sua senha,"
-        link = "/recover/password/?hash="+preq.uuid_str
-        html_message = "Clique neste link <a href='{link}'>{link}</a> para criar uma nova".format(
+        subject = "Recuperar senha"
+        site_domain = request.get_host()
+        link = site_domain+"/auth/recover-password/"+preq.uuid_str+"/"+email
+        html_message = "Olá, você solicitou a recuperação de sua senha, Clique neste link <a href='{link}'>{link}</a> para criar uma nova".format(
             link=link
         )
-        print(send_mail(
+        send_html_mail(
             subject,
-            message="Recuperar Senha",
-            html_message=html_message,
-            from_email=settings.FROM_EMAIL,
+            html_content=html_message,
             recipient_list=(user.email, ),
-        ))
+            sender=settings.FROM_EMAIL,
+        )
 
-        return Response(status=status.HTTP_202_ACCEPTED)
+        return Response({"message": "Email enviado"}, status=status.HTTP_202_ACCEPTED)
 
 class PasswordResetAPIView(views.APIView):
     """
@@ -69,17 +72,24 @@ class PasswordResetAPIView(views.APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         uuid = serializer.data['hash']
-        pwdreq = get_object_or_404(PasswordForgotRequest, hash=uuid, used=0)
-        if pwdreq.user.email != serializer.data['email']:
-            return Response(
-                {"you're not authorized to perform this operation"},
-                status=status.HTTP_403_FORBIDDEN)
-        #update password request record
-        pwdreq.used = True
-        pwdreq.save()
-        # update password
-        user = Account.objects.get(pk=pwdreq.user.pk)
-        user.set_password(serializer.data['password'])
-        user.save()
+        try:
+            pwdreq = PasswordForgotRequest.objects.get(hash=uuid, used=False )
+        except PasswordForgotRequest.DoesNotExist:
+            pwdreq = None
+        if pwdreq:
+            if pwdreq.user.email != serializer.data['email']:
+                return Response(
+                    {"message": "Você não tem permissão para realizar essa ação"},
+                    status=status.HTTP_403_FORBIDDEN)
+            #update password request record
+            pwdreq.used = True
+            pwdreq.save()
+            # update password
+            user = Account.objects.get(pk=pwdreq.user.pk)
+            user.set_password(serializer.data['password'])
+            user.save()
 
-        return Response(status=status.HTTP_200_OK)
+        else: 
+            return Response({"message": "Dados inválidos"},status=status.HTTP_404)
+            
+        return Response({"message": "Nova senha criada com sucesso"},status=status.HTTP_200_OK)

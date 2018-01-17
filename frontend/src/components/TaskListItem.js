@@ -9,7 +9,6 @@ import {
 import Moment from 'react-moment';
 import TaskAvatar from './TaskAvatar';
 import { calendarStrings } from '../constants/calendar';
-import { maxLength } from '../utils/validations';
 import '../../node_modules/moment/locale/pt-br';
 
 const TaskListItem = ({task, ...props}) => {

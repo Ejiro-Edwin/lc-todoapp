@@ -1,13 +1,10 @@
-import React, {Component} from "react"
+import React from "react"
 import {
     Grid, 
     Cell,
-    CardText,
     Button
 } from "react-md";
-import {
-  renderTextField
-} from "../utils/ReactMDRedux.js"
+import { renderTextField } from "../utils/ReactMDRedux.js"
 import {Field, reduxForm} from "redux-form"
 import {required} from "../utils/validations"
 
@@ -15,12 +12,8 @@ import {required} from "../utils/validations"
 const NewTodoForm = ({ ...props }) => {
     const {
         handleSubmit, 
-        pristine, 
         submitting, 
-        valid, 
-        onSubmit,
-        onUserAutocomplete,
-        errors
+        onSubmit
     } = props;
     return (
       <form
@@ -28,11 +21,6 @@ const NewTodoForm = ({ ...props }) => {
         style={{margin: 0, width: "100%"}}
         className="md-text--theme-primary"
       >
-        {!valid && (
-          <p className="md-body-1 md-text-field-message-container--error">
-            {errors}
-          </p>
-        )}
         <Grid noSpacing>
           <Cell size={12}>
             <Field

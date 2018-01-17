@@ -1,14 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Card, CardTitle, CardText } from 'react-md';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import FullWidthSection from '../components/FullWidthSection';
 import logo from "../images/todo-app-icon.png";
 
 const styles = {
   section: {
-    height: '100vh',
+    minHeight: '100vh',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
@@ -33,7 +32,7 @@ const AuthRoute = ({ component: Component, isAuthenticated, location, ...rest })
       <FullWidthSection style={styles.section}>
         <div style={styles.card}>
           <div style={styles.logo}>
-            <img width={80} src={logo} />
+            <img width={80} alt="logo" src={logo} />
           </div>
           <Component {...props} />
         </div>

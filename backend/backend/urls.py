@@ -23,8 +23,8 @@ urlpatterns = [
 
     # Browsable API
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('api/users/forgot/', views.PasswordRecoveryAPIView.as_view(), name='forgot_password'),
-    path('api/users/reset/', views.PasswordResetAPIView.as_view(), name='reset_password'),
+    path('api-auth/forgot/', views.PasswordRecoveryAPIView.as_view(), name='forgot_password'),
+    path('api-auth/reset/', views.PasswordResetAPIView.as_view(), name='reset_password'),
     path('admin/', admin.site.urls),
 ] 
 
