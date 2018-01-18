@@ -107,7 +107,7 @@ let SignUpForm = ({ ...props }) => {
               className="md-full-width md-text-center"
 
             >
-              Criar senha
+              Criar conta
             </Button>
           </Cell>
         </Grid>

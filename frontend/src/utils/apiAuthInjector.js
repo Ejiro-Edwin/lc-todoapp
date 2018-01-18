@@ -4,20 +4,14 @@ import { history } from '../index';
 
 
 export const authLocalManager = store => next => action => {
-  if (action.payload && (action.payload.status === 401 || action.payload.status === 403)) {
+  if (action.payload && (action.payload.status === 401)) {
       let errorMessage = "Sessão expirada, por favor faça login novamente";
       localStorage.removeItem('lctodo_token')
       return next({
         type: authConstants.LOGOUT,
-        errorMessage
+        meta: {errorMessage}
       })
   } 
-  
-  if (action.payload && (action.payload.status === 404)) {
-    history.push('/');
-  }
-  console.log(action);
-  
   return next(action)
 }
 

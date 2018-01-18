@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { toggleDialogTodo, toggleTodoDeleteDialog } from '../actions/todolist';
 import { fetchTodoTasks, updateTask, createTask } from '../actions/tasks';
-import { fetchUsers } from '../actions/users';
 import {  DialogContainer, List, ListItem, CircularProgress } from 'react-md';
 import TaskList from '../components/TaskList';
 import TaskAvatar from '../components/TaskAvatar';
@@ -27,7 +26,6 @@ class TaskListContainer extends Component {
 
 componentDidMount = () => {
     this.props.fetchTodoTasks(this.props.match.params.id);
-    this.props.fetchUsers();
 }
 componentWillReceiveProps = (nextProps) => {
   if(this.props.todolists !== nextProps.todolists || 
@@ -38,7 +36,7 @@ componentWillReceiveProps = (nextProps) => {
     this.setState({todoInfo});
   }
   if((this.props.users !== nextProps.users) && nextProps.users){ 
-    const data = this.props.users.map(user => ({
+    const data = nextProps.users.map(user => ({
         id: user.id,
         primaryText: `${user.first_name} ${user.last_name}`,
         leftAvatar: <TaskAvatar user={user} />,
@@ -135,10 +133,10 @@ render(){
         isFetching
     } = this.state;
     return (
-        this.props.isFetching?
+        <div>
+            {this.props.isFetching?
             <CircularProgress id="query-indeterminate-progress" />
             :
-        <div>
             <TaskList 
                 tasks={tasks}
                 todoName={todoInfo? todoInfo.title : ''}
@@ -152,7 +150,7 @@ render(){
                 taskDialogHandleVisibility={this.handleVisibilityTaskDialog}
                 userDialogHandleVisibility={this.handleVisibilityUserDialog} 
                 openTodoDialog={this.openTodoDialog}
-                openDeleteTodoDialog={this.openDeleteTodoDialog}/>
+                openDeleteTodoDialog={this.openDeleteTodoDialog}/>}
             <DialogContainer
                 id="add-task-dialog"
                 aria-labelledby="add-dialog"
@@ -207,9 +205,6 @@ const mapDispatchToProps = (dispatch) => ({
     },
     updateTask: (parameters) => {
         dispatch(updateTask(parameters))
-    },
-    fetchUsers: () => {
-        dispatch(fetchUsers())
     },
     createTask: (parameters) => {
         dispatch(createTask(parameters))

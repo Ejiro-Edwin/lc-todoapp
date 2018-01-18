@@ -43,6 +43,7 @@ const NewTaskForm = ({ ...props }) => {
               label="Atribuir para"
               component={renderAutocomplete}
               data={users}
+              dataValue="id"
               onAutocomplete={onUserAutocomplete}
           />
           </Cell>
