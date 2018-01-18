@@ -14,7 +14,36 @@ export const fetchTodoTasks = (todoListId) => ({
 		'Content-Type': 'application/json' 
 	 }
 	}
-  });
+});
+export const fetchTodayTasks = () => ({
+	[RSAA]: {
+	  types: [
+		  tasksConstants.FETCH_TODAYTASKS_REQUEST, 
+		  tasksConstants.FETCH_TODAYTASKS_SUCCESS, 
+		  tasksConstants.FETCH_TODAYTASKS_FAILURE, 
+		],
+	  endpoint: `/api/v1/tasks/today`,
+	  method: 'GET',
+	  headers: { 
+		'Content-Type': 'application/json' 
+	 }
+	}
+});
+
+export const fetchAllTasks = () => ({
+	[RSAA]: {
+	  types: [
+		  tasksConstants.FETCH_ALLTASKS_REQUEST, 
+		  tasksConstants.FETCH_ALLTASKS_SUCCESS, 
+		  tasksConstants.FETCH_ALLTASKS_FAILURE, 
+		],
+	  endpoint: `/api/v1/tasks/`,
+	  method: 'GET',
+	  headers: { 
+		'Content-Type': 'application/json' 
+	 }
+	}
+});
 
 export const updateTask = (parameters) => ({
 	[RSAA]: {

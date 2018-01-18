@@ -1,4 +1,4 @@
-import { RSAA } from 'redux-api-middleware';
+import { RSAA, getJSON } from 'redux-api-middleware';
 import { authConstants } from '../constants/auth';
 import { history } from '../index';
 
@@ -75,17 +75,22 @@ export const login = (parameters) => ({
     return { 
       [RSAA]: {
       types: [
-          authConstants.SIGNUP_PASSWORD_REQUEST, 
+          authConstants.SIGNUP_REQUEST, 
           {
-            type: authConstants.SIGNUP_PASSWORD_SUCCESS,
-            meta: (action, state, res) => {
+            type: authConstants.SIGNUP_SUCCESS,
+            payload: () => {
                 history.push('/auth/login');
-                return {successMessage: "Nova conta criada com sucesso"}
+              }
+            }
+          ,{
+            type: authConstants.SIGNUP_FAILURE,
+            payload: (action, state, res) =>
+              res.then(json => console.log(json)), // THIS WILL GIVE YOU DATA FROM FAILURE RESPONSE
+            meta: (action, state, res) => {
+              return res.json().then(json => {
+                return {errorMessage: Object.values(json)? Object.values(json)[0]: json }
+              });
             },
-          },
-          {
-            type: authConstants.SIGNUP_PASSWORD_FAILURE,
-            meta: {errorMessage: "Dados invalidos"},
           }
         ],
       endpoint: '/api/v1/users/',

@@ -43,6 +43,9 @@ const LoginForm = ({ ...props }) => {
           <Cell size={12} className="md-text-center">
             <Link to="/auth/forgot-password" style={{color: '#636363'}}>Esqueceu a senha?</Link>
           </Cell>
+          <Cell size={12} className="md-text-center">
+            <Link to="/auth/signup" style={{color: '#636363'}}>Não tem uma conta?</Link>
+          </Cell>
           <Cell size={12}>
             <Button
               type="submit"

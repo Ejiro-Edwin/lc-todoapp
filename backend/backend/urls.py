@@ -20,6 +20,8 @@ urlpatterns = [
 
     # JWT Auth
     path('api/v1/auth/obtain_token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path(r'^api/token/refresh/$', TokenRefreshView.as_view(), name='token_refresh'),
+
 
     # Browsable API
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
@@ -29,4 +31,4 @@ urlpatterns = [
 ] 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-print(urlpatterns)
+print(router)

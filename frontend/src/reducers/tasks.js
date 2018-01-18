@@ -4,21 +4,40 @@ import initialState from './initialState';
 
 export default function tasks(state = initialState.tasks, action) {
   switch (action.type) {
-    case tasksConstants.FETCH_TODOTASKS_REQUEST:
+    case tasksConstants.FETCH_TODOTASKS_REQUEST || tasksConstants.FETCH_TODAYTASKS_REQUEST:
       return {
         ...state,
         isFetching: true,
+        data: []
       }
-    case tasksConstants.FETCH_TODOTASKS_SUCCESS:
-      return {
-        isFetching: false,
-        data: action.payload
-      }
-    case tasksConstants.FETCH_TODOTASKS_FAILURE:
+    case tasksConstants.FETCH_TODOTASKS_SUCCESS  || tasksConstants.FETCH_TODAYTASKS_SUCCESS:
       return {
         ...state,
         isFetching: false,
+        data: action.payload
       }
+    case tasksConstants.FETCH_TODOTASKS_FAILURE || tasksConstants.FETCH_TODAYTASKS_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        data: []
+      }
+      case tasksConstants.FETCH_ALLTASKS_REQUEST:
+        return {
+          ...state,
+          isFetching: true,
+        }
+      case tasksConstants.FETCH_ALLTASKS_SUCCESS:
+        return {
+          ...state,
+          isFetching: false,
+          allTasksData: action.payload
+        }
+      case tasksConstants.FETCH_ALLTASKS_FAILURE:
+        return {
+          ...state,
+          isFetching: false,
+  }
     case tasksConstants.UPDATE_TASK_REQUEST:
       return {
         ...state,

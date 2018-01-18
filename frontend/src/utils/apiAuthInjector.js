@@ -16,6 +16,7 @@ export const authLocalManager = store => next => action => {
   if (action.payload && (action.payload.status === 404)) {
     history.push('/');
   }
+  console.log(action);
   
   return next(action)
 }

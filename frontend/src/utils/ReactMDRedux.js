@@ -181,7 +181,7 @@ export const renderFileUploadField = ({
     id={input.name}
     name={input.name}
     accept={accept}
-    label={"Selecione um arquivo"}
+    label={label}
     value={undefined}
     required
     onChange={input.onChange}
