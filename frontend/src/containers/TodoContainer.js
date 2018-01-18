@@ -9,6 +9,7 @@ import {
 } from '../actions/todolist';
 import { DialogContainer, Button } from 'react-md';
 import NewTodoForm from '../components/NewTodoForm';
+import { fetchUsers } from '../actions/users';
 import { history } from '../index';
 
 class TodoManagerContainer extends Component {
@@ -17,6 +18,9 @@ class TodoManagerContainer extends Component {
         this.state = {
             actualTodo: null
         }
+    }
+    componentDidMount = () => {
+        this.props.fetchUsers();
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -119,9 +123,13 @@ const mapStateToProps = (state) => ({
     isDeleteTodoDialogOpen: state.todolists.isDeleteTodoDialogOpen,
     isTodoDialogOpen: state.todolists.isTodoDialogOpen,
     edit: state.todolists.edit,
+    users: state.users.data
 })  
 
 const mapDispatchToProps = (dispatch) => ({
+    fetchUsers: () => {
+        dispatch(fetchUsers())
+    },
     createTodo: (parameters) => {
         dispatch(createTodo(parameters));
       },

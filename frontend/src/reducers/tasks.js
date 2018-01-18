@@ -1,4 +1,5 @@
 import { tasksConstants } from '../constants/tasks';
+import { LOCATION_CHANGE } from 'react-router-redux';
 import initialState from './initialState';
 
 
@@ -41,7 +42,6 @@ export default function tasks(state = initialState.tasks, action) {
     case tasksConstants.UPDATE_TASK_REQUEST:
       return {
         ...state,
-        isFetching: true
       }
     case tasksConstants.UPDATE_TASK_SUCCESS:
       return {
@@ -51,7 +51,8 @@ export default function tasks(state = initialState.tasks, action) {
             return action.payload
           } 
           return task
-        })
+        }),
+        isFetching: false
       }
     case tasksConstants.UPDATE_TASK_FAILURE:
       return{
@@ -66,13 +67,21 @@ export default function tasks(state = initialState.tasks, action) {
     case tasksConstants.CREATE_TASK_SUCCESS:
       return{
         ...state,
-        data: state.data.concat(action.payload)
+        data: state.data.concat(action.payload),
+        isFetching: false,
       }  
     case tasksConstants.CREATE_TASK_FAILURE:
       return{
         ...state,
         isFetching: false
       }  
+    case LOCATION_CHANGE: {
+      return {
+        ...state,
+        isFetching: true,
+        data: []
+      }
+    }
     default:
       return state
   }
