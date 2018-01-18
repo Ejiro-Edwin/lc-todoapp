@@ -13,4 +13,4 @@ A repository for LabCodes code challenge
 
 
 ## Production
-O projeto em produção pode ser encontrado no 159.89.177.23, as notificações sobre tasks são enviadas diariamente ás 20h
+O projeto em produção pode ser encontrado neste [link](http://159.89.177.23), as notificações sobre tasks são enviadas diariamente ás 20h
