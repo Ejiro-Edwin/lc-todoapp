@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>Olá, {{ user.first_name }}</h1>
+        {% if tasks %}
+        <h2>Estas {{tasks|length}} tasks foram concluidas hoje: </h2>
+        <ul>
+            {% for task in tasks %}
+                <li>{{task.description}}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <h2>Nenhuma task foi concluida hoje. </h2>
+        {% endif %}
+        <br/>
+        {% if future_tasks %}
+        <h3>Suas proximas prioridades são</h3>
+        <ul>
+            {% for task in future_tasks %}
+                <li>{{task.description}}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <h2>Parece que não existem tasks pendentes. Volte ao site para adicionar</h2>
+        {% endif %}
+    </body>
+</html>

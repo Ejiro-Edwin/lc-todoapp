@@ -73,12 +73,13 @@ const TaskList = ({ ...props }) => (
                             onToggleTaskStatus={props.onToggleTaskStatus}
                             userDialogHandleVisibility={props.userDialogHandleVisibility} />
                     )
-                    : 
-                    <Cell size={12}>
-                        <p>Você ainda não tem tasks cadastradas nesta to-do</p>
-                    </Cell>}
+                    : null}
               </TableBody>
             </DataTable>
+            {props.tasks.length === 0?
+                <Cell size={12}>
+                    <p>Você ainda não tem tasks cadastradas nesta to-do</p>
+                </Cell> : null}
         </Cell>
     </Grid>
 )

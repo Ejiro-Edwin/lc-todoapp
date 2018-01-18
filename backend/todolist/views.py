@@ -1,9 +1,10 @@
 from rest_framework import viewsets
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 from todolist.models import TodoList, Task
 from todolist.serializers import TodoListSerializer, TaskSerializer
 from rest_framework.permissions import IsAuthenticated
+from datetime import datetime
 
 class TodoListViewSet(viewsets.ModelViewSet):
     """Todo API Views"""
@@ -18,10 +19,20 @@ class TodoListViewSet(viewsets.ModelViewSet):
         response = TaskSerializer(instance=tasks, many=True, context={'request': request})
         return Response(response.data)
 
+
 class TasksViewSet(viewsets.ModelViewSet):
     """Tasks API Views"""
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
     permission_classes = (IsAuthenticated,)
+
+    @list_route(methods=['get'], permission_classes=[IsAuthenticated])
+    def today(self, request, pk=None):
+        print(datetime.today())
+        tasks = Task.objects.filter(deadline__date=datetime.today())
+        response = TaskSerializer(instance=tasks, many=True, context={'request': request})
+        return Response(response.data)
+        
+
 
 

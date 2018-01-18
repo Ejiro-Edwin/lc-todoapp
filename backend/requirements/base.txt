@@ -11,3 +11,7 @@ Pillow
 django-model-utils
 djangorestframework==3.7.7
 djangorestframework_simplejwt
+model_mommy
+celery==4.1.0
+django_celery_beat
+django-celery-results

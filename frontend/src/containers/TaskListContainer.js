@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { toggleDialogTodo, toggleTodoDeleteDialog } from '../actions/todolist';
 import { fetchTodoTasks, updateTask, createTask } from '../actions/tasks';
 import { fetchUsers } from '../actions/users';
-import {  DialogContainer, List, ListItem } from 'react-md';
+import {  DialogContainer, List, ListItem, CircularProgress } from 'react-md';
 import TaskList from '../components/TaskList';
 import TaskAvatar from '../components/TaskAvatar';
 import moment from 'moment';
@@ -131,9 +131,13 @@ render(){
         userDialogVisibility,
         datePickerValue, 
         todoInfo, 
-        usersData 
+        usersData,
+        isFetching
     } = this.state;
     return (
+        this.props.isFetching?
+            <CircularProgress id="query-indeterminate-progress" />
+            :
         <div>
             <TaskList 
                 tasks={tasks}
@@ -192,6 +196,7 @@ render(){
 const mapStateToProps = (state) => ({
     tasks: state.tasks.data,
     isAuthenticated: state.auth.isAuthenticated,
+    isFetching: state.tasks.isFetching,
     todolists: state.todolists.data,
     users: state.users.data
 })  
@@ -214,7 +219,7 @@ const mapDispatchToProps = (dispatch) => ({
     },
     toggleTodoDeleteDialog: (visible) => {
         dispatch(toggleTodoDeleteDialog(visible))
-    }
+    },
 })
 
 

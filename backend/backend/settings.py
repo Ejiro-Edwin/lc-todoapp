@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os, sys
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -58,10 +59,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'backend.urls'
 
+
+def base_dir_join(*args):
+    print(os.path.join(BASE_DIR, *args))
+    return os.path.join(BASE_DIR, *args)
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [base_dir_join('templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -131,7 +136,7 @@ CORS_ORIGIN_ALLOW_ALL= True
 
 LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Recife'
 
 USE_I18N = True
 
@@ -158,3 +163,29 @@ EMAIL_HOST_USER = 'testelabcodes@gmail.com'
 EMAIL_HOST_PASSWORD = 'labtodo123'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=6),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    
+}
+
+'''
+CELERY
+'''
+
+CELERY_BROKER_URL = 'amqp://localhost'
+CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+
+INSTALLED_APPS += (
+    'django_celery_results',
+    'django_celery_beat'
+)
+
+CELERY_RESULT_BACKEND = 'django-db'
+
+# command start schedulers
+## celery -A backend beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+
+# command starts workers
+## celery -A backend worker -l info

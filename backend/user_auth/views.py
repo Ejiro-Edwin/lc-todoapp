@@ -4,21 +4,25 @@ from rest_framework import viewsets, permissions, status, views, generics
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route
 from user_auth.models import Account, PasswordForgotRequest
+from todolist.models import Task
 from user_auth.serializers import AccountSerializer, PasswordResetSerializer
-from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
+from rest_framework.throttling import AnonRateThrottle
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .send_email import send_html_mail
 from django.conf import settings
+from datetime import datetime
 from rest_framework.parsers import MultiPartParser, JSONParser
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 class UserViewSet(viewsets.ModelViewSet):
     """User API Views"""
     queryset = Account.objects.all()
     serializer_class= AccountSerializer
     parser_classes = (MultiPartParser, )
-    
 
 
 class PasswordRecoveryAPIView(views.APIView):
@@ -93,3 +97,4 @@ class PasswordResetAPIView(views.APIView):
             return Response({"message": "Dados inválidos"},status=status.HTTP_404)
             
         return Response({"message": "Nova senha criada com sucesso"},status=status.HTTP_200_OK)
+

@@ -16,7 +16,8 @@ const initialState = {
     },
     tasks: {
         data: [],
-        isFetching: false
+        isFetching: true,
+        allTasksData: []
     },
     users: {
         data: [],

@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { fetchTodoLists, toggleDialogTodo } from '../actions/todolist';
+import { logout } from '../actions/auth';
 import { NavigationDrawer } from 'react-md';
 import NavLink from '../components/NavLink';
 import imgLogo from '../images/todo-app-logo.png';
+import Button from 'react-md/lib/Buttons/Button';
 
 class AppBarContainer extends Component {
 
@@ -59,6 +61,7 @@ class AppBarContainer extends Component {
                 transitionLeaveTimeout={null}
                 drawerTransitionDuration={0}
                 drawerTitle={""}
+                toolbarActions={<Button onClick={this.props.logout} icon>exit_to_app</Button>}
                 desktopDrawerType={NavigationDrawer.DrawerTypes.CLIPPED}
                 drawerZDepth={1}
                 toolbarThemeType="themed"
@@ -84,6 +87,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     toggleDialogTodo: (visible) => {
         dispatch(toggleDialogTodo(visible))
+      },
+    logout: () => {
+        dispatch(logout())
       },
 })
 
